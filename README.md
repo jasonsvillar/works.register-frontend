@@ -1,3 +1,6 @@
+# Following guide
+https://www.bezkoder.com/angular-16-crud-example/
+
 # WorksRegisterFrontend
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.8.
