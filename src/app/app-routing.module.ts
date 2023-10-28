@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { RegisterUserComponent } from './user/register-user/register-user.component';
 
 const routes: Routes = [
-  { path: 'register', component: RegisterUserComponent }
+  { path: 'user/register', component: RegisterUserComponent }
 ];
 
 @NgModule({
