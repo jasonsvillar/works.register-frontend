@@ -1,50 +1,30 @@
-<p>Register-User works!</p>
+<div class="wrapper">
 
-<div>
-    <div class="submit-form">
-      <div *ngIf="!submitted">
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input
-            type="text"
-            class="form-control"
-            id="name"
-            required
-            [(ngModel)]="user.name"
-            name="name"
-          />
-        </div>
-  
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input
-            class="form-control"
-            id="email"
-            required
-            [(ngModel)]="user.email"
-            name="email"
-          />
-        </div>
+  <h1>User registration</h1>
 
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              required
-              [(ngModel)]="user.password"
-              name="password"
-            />
-          </div>
-  
-        <button (click)="registerUser()" class="btn btn-success">Register</button>
-      </div>
-  
-      <div *ngIf="submitted">
-        <h4>Registration request has been successfully send!</h4>
-        <button class="btn btn-success" (click)="newUser()">New Registration</button>
-      </div>
-    </div>
+  <div *ngIf="!submitted">
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput type="text"
+          autocomplete="off" [(ngModel)]="user.name" required/>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="text" [(ngModel)]="user.email" required/>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" [(ngModel)]="user.password" required/>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="registerUser()">Register</button>
   </div>
-  
+
+  <div *ngIf="submitted">
+    <h4>Registration request has been successfully send!</h4>
+    <button mat-raised-button color="secondary" (click)="newUser()">New Registration</button>
+  </div>
+
+</div>
