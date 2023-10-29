@@ -1,30 +1,31 @@
-<div class="wrapper">
+<div class="container mx-auto">
 
-  <h1>User registration</h1>
+  <p class="text-center text-6xl py-16">User Registration</p>
 
-  <div *ngIf="!submitted">
-    <mat-form-field appearance="outline">
-      <mat-label>Name</mat-label>
-      <input matInput type="text"
-          autocomplete="off" [(ngModel)]="user.name" required/>
-    </mat-form-field>
+  <div class="px-96">
+    <div *ngIf="!submitted">
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput type="text" autocomplete="off" [(ngModel)]="user.name" required />
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
-        <input matInput type="text" [(ngModel)]="user.email" required/>
-    </mat-form-field>
+        <input matInput type="text" autocomplete="off" [(ngModel)]="user.email" required />
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Password</mat-label>
-      <input matInput type="password" [(ngModel)]="user.password" required/>
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" [(ngModel)]="user.password" required />
+      </mat-form-field>
 
-    <button mat-raised-button color="primary" (click)="registerUser()">Register</button>
-  </div>
+      <button mat-raised-button color="primary" (click)="registerUser()">Register</button>
+    </div>
 
-  <div *ngIf="submitted">
-    <h4>Registration request has been successfully send!</h4>
-    <button mat-raised-button color="secondary" (click)="newUser()">New Registration</button>
+    <div *ngIf="submitted">
+      <h4>Registration request has been successfully send!</h4>
+      <button mat-raised-button color="secondary" (click)="newUser()">New Registration</button>
+    </div>
   </div>
 
 </div>
