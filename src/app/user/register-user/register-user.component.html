@@ -1,8 +1,15 @@
-<div class="container mx-auto">
+<div class="mx-auto">
 
-  <p class="text-center text-6xl py-16">User Registration</p>
-
-  <div class="px-96">
+  <div class="grid grid-cols-12 mt-10">
+    <div class="col-start-2 col-span-10 grid grid-cols-2">
+        <div>
+          <img class="h-36 md:h-44 float-right" src="assets/img/logo.png" />
+        </div>
+        <p class="py-16 h-full text-4xl md:text-6xl">Sign Up</p>
+    </div>
+  </div>
+  
+  <div class="max-w-sm mx-auto">
     <div *ngIf="!submitted">
       <mat-form-field appearance="outline">
         <mat-label>Name</mat-label>
