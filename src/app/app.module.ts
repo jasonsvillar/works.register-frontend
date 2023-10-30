@@ -12,11 +12,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { LoginComponent } from './user/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RegisterUserComponent
+    RegisterUserComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
