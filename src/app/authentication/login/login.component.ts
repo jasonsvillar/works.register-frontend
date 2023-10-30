@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../user.service';
-import { User } from '../user.model';
+import { AuthenticationService } from '../../authentication/authentication.service';
+import { Authentication } from '../../authentication/authentication.model';
 
 @Component({
   selector: 'app-login',
@@ -8,24 +8,24 @@ import { User } from '../user.model';
   styleUrls: ['./login.component.sass']
 })
 export class LoginComponent implements OnInit {
-  user: User = {
-    name: '',
+  authentication: Authentication = {
+    userName: '',
     password: ''
   };
 
   submitted = false;
 
-  constructor(private userService: UserService) { }
+  constructor(private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void { }
 
   loginUser(): void {
     const userToLogin = {
-      name: this.user.name,
-      password: this.user.password
+      userName: this.authentication.userName,
+      password: this.authentication.password
     };
 
-    this.userService.login(userToLogin)
+    this.authenticationService.login(userToLogin)
       .subscribe({
         next: (res) => {
           console.log(res);
@@ -40,8 +40,8 @@ export class LoginComponent implements OnInit {
 
   newUser(): void {
     this.submitted = false;
-    this.user = {
-      name: '',
+    this.authentication = {
+      userName: '',
       password: ''
     };
   }
