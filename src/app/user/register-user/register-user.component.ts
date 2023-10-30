@@ -14,11 +14,12 @@ export class RegisterUserComponent implements OnInit {
     email: '',
     password: ''
   };
+
   submitted = false;
 
   constructor(private userService: UserService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   registerUser(): void {
     const userToRegister = {
@@ -36,7 +37,6 @@ export class RegisterUserComponent implements OnInit {
         error: (e) => console.error(e)
       });
   }
-
 
   newUser(): void {
     this.submitted = false;

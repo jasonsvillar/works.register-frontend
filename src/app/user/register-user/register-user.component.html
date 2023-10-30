@@ -1,15 +1,10 @@
-<div class="mx-auto">
-
-  <div class="grid grid-cols-12 mt-10">
-    <div class="col-start-2 col-span-10 grid grid-cols-2">
-        <div>
-          <img class="h-36 md:h-44 float-right" src="assets/img/logo.png" />
-        </div>
-        <p class="py-16 h-full text-4xl md:text-6xl">Sign Up</p>
-    </div>
-  </div>
+<div class="max-w-sm mx-auto p-10 border-2 rounded-xl border-indigo-400 shadow-xl shadow-black bg-white">
   
-  <div class="max-w-sm mx-auto">
+    <div class="text-center">
+        <p class="py-10 text-4xl">Sign Up</p>
+    </div>
+  
+  <div>
     <div *ngIf="!submitted">
       <mat-form-field appearance="outline">
         <mat-label>Name</mat-label>
@@ -26,13 +21,20 @@
         <input matInput type="password" [(ngModel)]="user.password" required />
       </mat-form-field>
 
-      <button mat-raised-button color="primary" (click)="registerUser()">Register</button>
+      <div class="text-center">
+        <button mat-raised-button color="primary" (click)="registerUser()">Register</button>
+      </div>
     </div>
 
     <div *ngIf="submitted">
       <h4>Registration request has been successfully send!</h4>
       <button mat-raised-button color="secondary" (click)="newUser()">New Registration</button>
     </div>
+  </div>
+
+  <div class="text-center mt-4">
+    You already have an account?
+    <a href="user/login" class="underline">Log in here</a>.
   </div>
 
 </div>
