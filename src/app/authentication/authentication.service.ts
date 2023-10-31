@@ -19,4 +19,8 @@ export class AuthenticationService {
   login(data: any): Observable<any> {
     return this.http.post(AUTH_API.concat("basic-authentication"), data, httpOptions);
   }
+
+  logout(): Observable<any> {
+    return this.http.get(AUTH_API + 'logout-jwt', httpOptions);
+  }
 }

@@ -15,12 +15,16 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { LoginComponent } from './authentication/login/login.component';
 
 import { httpInterceptorProviders } from './helpers/http.interceptor';
+import { DashboardComponent } from './home/dashboard/dashboard.component';
+import { HeaderComponent } from './home/header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegisterUserComponent,
-    LoginComponent
+    LoginComponent,
+    DashboardComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
