@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../authentication/authentication.service';
 import { Authentication } from '../../authentication/authentication.model';
+import { StorageService } from '../../authentication/storage.service';
 
 @Component({
   selector: 'app-login',
@@ -13,36 +14,40 @@ export class LoginComponent implements OnInit {
     password: ''
   };
 
+  isLoggedIn = false;
+  isLoginFailed = false;
+  errorMessage = '';
+  roles: string[] = [];
+
   submitted = false;
 
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor(private authenticationService: AuthenticationService, private storageService: StorageService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    if (this.storageService.isLoggedIn()) {
+      this.isLoggedIn = true;
+      this.roles = this.storageService.getUser().roles;
+    }
+  }
 
-  loginUser(): void {
+  login(): void {
     const userToLogin = {
       userName: this.authentication.userName,
       password: this.authentication.password
     };
 
-    this.authenticationService.login(userToLogin)
-      .subscribe({
-        next: (res) => {
-          console.log(res);
-          this.submitted = true;
-        },
-        error: (e) => {
-          console.error(e);
-          this.newUser();
-        }
-      });
-  }
+    this.authenticationService.login(userToLogin).subscribe({
+      next: data => {
+        this.storageService.saveUser(data);
 
-  newUser(): void {
-    this.submitted = false;
-    this.authentication = {
-      userName: '',
-      password: ''
-    };
+        this.isLoginFailed = false;
+        this.isLoggedIn = true;
+        this.roles = this.storageService.getUser().roles;
+      },
+      error: err => {
+        this.errorMessage = err.error.message;
+        this.isLoginFailed = true;
+      }
+    });
   }
 }
