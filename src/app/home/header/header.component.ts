@@ -21,15 +21,19 @@ export class HeaderComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    if (this.storageService.isLoggedIn()) {
-      this.isLoggedIn = true;
-    }
+    this.isLoggedIn = this.storageService.isLoggedIn();
+  }
+
+  check(): boolean {
+    this.isLoggedIn = this.storageService.isLoggedIn();
+    return this.isLoggedIn;
   }
 
   logout(): void {
     this.authenticationService.logout().subscribe({
       next: data => {
         this.storageService.clean();
+        this.isLoggedIn = false;
         this.router.navigateByUrl('user/login');
       }
     });

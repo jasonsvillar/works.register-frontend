@@ -1,7 +1,12 @@
-<header class="bg-slate-900 p-2 flex flex-row gap-x-3">
+<header class="bg-slate-900 p-2 flex flex-row gap-x-3 relative">
     <img class="h-16" src="assets/img/logo.png" />
-    <div class="h-16 text-white grid grid-cols-1 content-center text-3xl font-reydex">Works Register</div>
-    <div *ngIf="isLoggedIn" class="grid grid-cols-1 content-center text-3xl float-right">
-        <button mat-flat-button color="primary" (click)="logout()">Logout</button>
+    <div class="h-16 text-white grid grid-cols-1 content-center text-3xl font-reydex">Works</div>
+    <div *ngIf="check()" class="grid grid-cols-1 content-center text-4xl absolute right-2 top-0 bottom-0">
+        <button mat-flat-button color="primary" (click)="logout()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline h-7 w-7 invert">
+                <image href="assets/img/logout.svg" class="h-full" />
+            </svg>
+            Logout
+        </button>
     </div>
 </header>
