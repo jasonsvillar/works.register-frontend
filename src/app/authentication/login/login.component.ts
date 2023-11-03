@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
 import { AuthenticationService } from '../../authentication/authentication.service';
 import { Authentication } from '../../authentication/authentication.model';
 import { StorageService } from '../../authentication/storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +23,10 @@ export class LoginComponent implements OnInit {
 
   submitted = false;
 
-  constructor(private authenticationService: AuthenticationService, private storageService: StorageService) { }
+  constructor(
+    private authenticationService: AuthenticationService,
+    private storageService: StorageService,
+    private router: Router) { }
 
   ngOnInit(): void {
     if (this.storageService.isLoggedIn()) {
@@ -36,18 +41,20 @@ export class LoginComponent implements OnInit {
       password: this.authentication.password
     };
 
-    this.authenticationService.login(userToLogin).subscribe({
-      next: data => {
-        this.storageService.saveUser(data);
+    this.authenticationService.login(userToLogin).subscribe(
+      (resp: HttpResponse<any>) => {
+        let jwt = resp.headers.get("authorization");
+        let user = resp.body;
+
+        user.jwt = jwt;
+
+        this.storageService.saveUser(user);
 
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.roles = this.storageService.getUser().roles;
-      },
-      error: err => {
-        this.errorMessage = err.error.message;
-        this.isLoginFailed = true;
-      }
-    });
+
+        this.router.navigateByUrl('dashboard');
+      });
   }
 }

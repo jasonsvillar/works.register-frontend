@@ -17,7 +17,7 @@ export class AuthenticationService {
   constructor(private http: HttpClient) { }
 
   login(data: any): Observable<any> {
-    return this.http.post(AUTH_API.concat("basic-authentication"), data, httpOptions);
+    return this.http.post(AUTH_API.concat("basic-authentication"), data, {observe: 'response'});
   }
 
   logout(): Observable<any> {

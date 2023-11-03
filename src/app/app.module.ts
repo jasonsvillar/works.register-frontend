@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { RegisterUserComponent } from './user/register-user/register-user.component';
 
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatButtonModule } from '@angular/material/button';
@@ -15,6 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { LoginComponent } from './authentication/login/login.component';
 
 import { httpInterceptorProviders } from './helpers/http.interceptor';
+import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { DashboardComponent } from './home/dashboard/dashboard.component';
 import { HeaderComponent } from './home/header/header.component';
 
@@ -36,7 +37,10 @@ import { HeaderComponent } from './home/header/header.component';
     MatInputModule,
     MatFormFieldModule
   ],
-  providers: [httpInterceptorProviders],
+  providers: [
+    httpInterceptorProviders, 
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
