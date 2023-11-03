@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
+
 import { AuthenticationService } from '../../authentication/authentication.service';
 import { Authentication } from '../../authentication/authentication.model';
 import { StorageService } from '../../authentication/storage.service';
 import { Router } from '@angular/router';
+import { DialogLoginFailComponent } from '../../authentication/login/dialog/dialog-login-fail/dialog-login-fail.component'
 
 @Component({
   selector: 'app-login',
@@ -26,7 +29,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private authenticationService: AuthenticationService,
     private storageService: StorageService,
-    private router: Router) { }
+    private router: Router,
+    public dialog: MatDialog) { }
 
   ngOnInit(): void {
     if (this.storageService.isLoggedIn()) {
@@ -55,6 +59,12 @@ export class LoginComponent implements OnInit {
         this.roles = this.storageService.getUser().roles;
 
         this.router.navigateByUrl('dashboard');
-      });
+      },
+      err => {
+        this.dialog.open(DialogLoginFailComponent, {
+          data: { message: err.error },
+        });
+      }
+      );
   }
 }
