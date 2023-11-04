@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { StorageService } from 'src/app/authentication/storage.service';
@@ -11,21 +10,23 @@ import { AuthenticationService } from 'src/app/authentication/authentication.ser
   styleUrls: ['./header.component.sass']
 })
 
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
 
   isLoggedIn = false;
+  name = "";
   
   constructor(
     private storageService: StorageService,
     private authenticationService: AuthenticationService,
     private router: Router) { }
 
-  ngOnInit(): void {
-    this.isLoggedIn = this.storageService.isLoggedIn();
-  }
-
   check(): boolean {
     this.isLoggedIn = this.storageService.isLoggedIn();
+    if (this.isLoggedIn) {
+      this.name = this.storageService.getUser().name;
+    } else {
+      this.name = "";
+    }
     return this.isLoggedIn;
   }
 
@@ -34,6 +35,7 @@ export class HeaderComponent implements OnInit {
       next: data => {
         this.storageService.clean();
         this.isLoggedIn = false;
+        this.name = "";
         this.router.navigateByUrl('user/login');
       }
     });
