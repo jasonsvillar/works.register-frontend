@@ -3,9 +3,15 @@
     <div class="h-16 text-white grid grid-cols-1 content-center text-3xl font-reydex">Works</div>
 
     <div *ngIf="check()" class="grid grid-cols-3 gap-x-2 ml-2">
-        <div class="h-16 grid grid-cols-1 content-center text-xl"><button mat-flat-button color="primary">Services</button></div>
-        <div class="h-16 grid grid-cols-1 content-center text-xl"><button mat-flat-button color="primary">Clients</button></div>
-        <div class="h-16 grid grid-cols-1 content-center text-xl"><button mat-flat-button color="primary">Works</button></div>
+        <div class="h-16 grid grid-cols-1 content-center text-xl">
+            <button mat-flat-button color="primary" (click)="goToServices()">Services</button>
+        </div>
+        <div class="h-16 grid grid-cols-1 content-center text-xl">
+            <button mat-flat-button color="primary">Clients</button>
+        </div>
+        <div class="h-16 grid grid-cols-1 content-center text-xl">
+            <button mat-flat-button color="primary">Works</button>
+        </div>
     </div>
 
     <div *ngIf="check()" class="grid grid-cols-2 content-center absolute right-4 top-0 bottom-0">

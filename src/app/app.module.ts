@@ -20,6 +20,7 @@ import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { DashboardComponent } from './home/dashboard/dashboard.component';
 import { HeaderComponent } from './home/header/header.component';
 import { DialogLoginFailComponent } from './authentication/login/dialog/dialog-login-fail/dialog-login-fail.component';
+import { GetAllServiceComponent } from './service/get-all-service/get-all-service.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { DialogLoginFailComponent } from './authentication/login/dialog/dialog-l
     LoginComponent,
     DashboardComponent,
     HeaderComponent,
-    DialogLoginFailComponent
+    DialogLoginFailComponent,
+    GetAllServiceComponent
   ],
   imports: [
     BrowserModule,

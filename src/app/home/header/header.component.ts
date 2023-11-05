@@ -11,10 +11,9 @@ import { AuthenticationService } from 'src/app/authentication/authentication.ser
 })
 
 export class HeaderComponent {
-
   isLoggedIn = false;
   name = "";
-  
+
   constructor(
     private storageService: StorageService,
     private authenticationService: AuthenticationService,
@@ -39,5 +38,9 @@ export class HeaderComponent {
         this.router.navigateByUrl('user/login');
       }
     });
+  }
+
+  goToServices(): void {
+    this.router.navigateByUrl('services');
   }
 }
