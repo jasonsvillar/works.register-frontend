@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
+
 
 import { StorageService } from 'src/app/authentication/storage.service';
 
@@ -10,7 +12,8 @@ export class JwtInterceptor implements HttpInterceptor {
     private isRefreshing = false;
 
     constructor(
-        private storageService: StorageService
+        private storageService: StorageService,
+        private router: Router
     ) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -28,7 +31,7 @@ export class JwtInterceptor implements HttpInterceptor {
                 if (
                     error instanceof HttpErrorResponse &&
                     !request.url.includes('user/login') &&
-                    error.status === 401
+                    (error.status === 401 || error.status === 403)
                 ) {
                     return this.handle401Error(request, next);
                 }
@@ -44,6 +47,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
             if (this.storageService.isLoggedIn()) {
                 this.storageService.clean();
+                this.router.navigateByUrl('user/login');
             }
         }
 

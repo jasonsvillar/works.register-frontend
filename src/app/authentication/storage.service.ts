@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { LoginResponseWithJwt } from './interfaces/login-response-with-jwt';
 
 const USER_KEY = 'auth-user';
 
@@ -12,9 +13,9 @@ export class StorageService {
     window.sessionStorage.clear();
   }
 
-  public saveUser(user: any): void {
+  public saveUser(loginResponseWhitJwt: LoginResponseWithJwt): void {
     window.sessionStorage.removeItem(USER_KEY);
-    window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+    window.sessionStorage.setItem(USER_KEY, JSON.stringify(loginResponseWhitJwt));
   }
 
   public getUser(): any {

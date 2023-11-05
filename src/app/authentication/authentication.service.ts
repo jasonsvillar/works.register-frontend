@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { LoginRequest } from './interfaces/login-request';
 
 const AUTH_API = 'http://localhost:8080/api/auth/';
 
@@ -16,8 +17,8 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) { }
 
-  login(data: any): Observable<any> {
-    return this.http.post(AUTH_API.concat("basic-authentication"), data, {observe: 'response'});
+  login(loginRequest: LoginRequest): Observable<any> {
+    return this.http.post(AUTH_API.concat("basic-authentication"), loginRequest, {observe: 'response'});
   }
 
   logout(): Observable<any> {

@@ -3,10 +3,12 @@ import { HttpResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 
 import { AuthenticationService } from '../../authentication/authentication.service';
-import { Authentication } from '../../authentication/authentication.model';
 import { StorageService } from '../../authentication/storage.service';
 import { Router } from '@angular/router';
 import { DialogLoginFailComponent } from '../../authentication/login/dialog/dialog-login-fail/dialog-login-fail.component'
+import { LoginRequest } from '../interfaces/login-request';
+import { LoginResponse } from '../interfaces/login-response';
+import { LoginResponseWithJwt } from '../interfaces/login-response-with-jwt';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +16,7 @@ import { DialogLoginFailComponent } from '../../authentication/login/dialog/dial
   styleUrls: ['./login.component.sass']
 })
 export class LoginComponent implements OnInit {
-  authentication: Authentication = {
+  authentication: LoginRequest = {
     userName: '',
     password: ''
   };
@@ -40,31 +42,34 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    const userToLogin = {
-      userName: this.authentication.userName,
-      password: this.authentication.password
-    };
-
-    this.authenticationService.login(userToLogin).subscribe(
-      (resp: HttpResponse<any>) => {
+    this.authenticationService.login(this.authentication).subscribe({
+      next: (resp: HttpResponse<LoginResponse>) => {
         let jwt = resp.headers.get("authorization");
         let user = resp.body;
 
-        user.jwt = jwt;
+        if (user && jwt) {
+          let userWithJwt: LoginResponseWithJwt = {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            autorityList: user.autorityList,
+            jwt: jwt
+          }
 
-        this.storageService.saveUser(user);
+          this.storageService.saveUser(userWithJwt);
 
-        this.isLoginFailed = false;
-        this.isLoggedIn = true;
-        this.roles = this.storageService.getUser().roles;
+          this.isLoginFailed = false;
+          this.isLoggedIn = true;
+          this.roles = this.storageService.getUser().roles;
 
-        this.router.navigateByUrl('dashboard');
+          this.router.navigateByUrl('dashboard');
+        }
       },
-      err => {
+      error: (err) => {
         this.dialog.open(DialogLoginFailComponent, {
           data: { message: err.error },
         });
-      }
-      );
+      },
+    });
   }
 }
