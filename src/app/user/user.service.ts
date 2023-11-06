@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-//import { UserModel } from '../user/user.model';
+import { UserRegisterRequest } from './interfaces/user-register-request';
+import { UserRegisterResponse } from './interfaces/user-register-response';
 
 const AUTH_API = 'http://localhost:8080/api/v1/';
 
@@ -17,7 +18,7 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  register(data: any): Observable<any> {
-    return this.http.post(AUTH_API.concat("user"), data, httpOptions);
+  register(userRegisterRequest: UserRegisterRequest): Observable<UserRegisterResponse> {
+    return this.http.post<UserRegisterResponse>(AUTH_API.concat("user"), userRegisterRequest, httpOptions);
   }
 }

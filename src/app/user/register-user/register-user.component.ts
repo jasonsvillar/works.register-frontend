@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
-import { User } from '../user.model';
+import { UserRegisterRequest } from '../interfaces/user-register-request';
+import { UserRegisterResponse } from '../interfaces/user-register-response';
 
 @Component({
   selector: 'app-register-user',
@@ -9,7 +10,7 @@ import { User } from '../user.model';
 })
 
 export class RegisterUserComponent implements OnInit {
-  user: User = {
+  user: UserRegisterRequest = {
     name: '',
     email: '',
     password: ''
@@ -22,28 +23,12 @@ export class RegisterUserComponent implements OnInit {
   ngOnInit(): void { }
 
   registerUser(): void {
-    const userToRegister = {
-      name: this.user.name,
-      email: this.user.email,
-      password: this.user.password
-    };
-
-    this.userService.register(userToRegister)
+    this.userService.register(this.user)
       .subscribe({
-        next: (res) => {
-          console.log(res);
+        next: (userRegisterResponse : UserRegisterResponse) => {
           this.submitted = true;
         },
         error: (e) => console.error(e)
       });
-  }
-
-  newUser(): void {
-    this.submitted = false;
-    this.user = {
-      name: '',
-      email: '',
-      password: ''
-    };
   }
 }
