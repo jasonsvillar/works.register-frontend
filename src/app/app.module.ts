@@ -13,7 +13,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { LoginComponent } from './authentication/login/login.component';
-import { MatDialogModule } from '@angular/material/dialog'; 
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
 
 import { httpInterceptorProviders } from './helpers/http.interceptor';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
@@ -41,7 +42,8 @@ import { GetAllServiceComponent } from './service/get-all-service/get-all-servic
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTableModule
   ],
   providers: [
     httpInterceptorProviders, 
