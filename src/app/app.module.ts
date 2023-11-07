@@ -15,6 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { LoginComponent } from './authentication/login/login.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 
 import { httpInterceptorProviders } from './helpers/http.interceptor';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
@@ -43,7 +44,8 @@ import { GetAllServiceComponent } from './service/get-all-service/get-all-servic
     MatInputModule,
     MatFormFieldModule,
     MatDialogModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginatorModule
   ],
   providers: [
     httpInterceptorProviders, 

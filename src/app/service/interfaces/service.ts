@@ -1,4 +1,4 @@
-export interface ServiceResponse {
+export interface Service {
     id: number,
     name: string
 }
