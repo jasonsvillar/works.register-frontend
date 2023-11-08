@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient, HttpHeaders, HttpEvent } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Service } from './interfaces/service';
 
@@ -17,11 +17,19 @@ export class ServiceService {
 
   constructor(private http: HttpClient) { }
 
-  getServices(page: number, rows: number): Observable<Service[]> {
+  getUserServices(page: number, rows: number): Observable<Service[]> {
     return this.http.get<Service[]>(AUTH_API + 'services/page/' + page + '/rows/' + rows, httpOptions);
   }
 
-  getRowCount(): Observable<number> {
+  getUserServicesRowCount(): Observable<number> {
     return this.http.get<number>(AUTH_API + 'services/row-count', httpOptions);
+  }
+
+  getSystemServices(page: number, rows: number): Observable<Service[]> {
+    return this.http.get<Service[]>(AUTH_API + 'services/all/page/' + page + '/rows/' + rows, httpOptions);
+  }
+
+  getAllServicesRowCount(): Observable<number> {
+    return this.http.get<number>(AUTH_API + 'services/all/row-count', httpOptions);
   }
 }

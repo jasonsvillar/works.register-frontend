@@ -32,12 +32,12 @@ export class GetAllServiceComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getRowCount();
-    this.getService();
+    this.getUserServiceRowCount();
+    this.getUserServices();
   }
 
-  getRowCount() {
-    this.serviceService.getRowCount().subscribe({
+  getUserServiceRowCount() {
+    this.serviceService.getUserServicesRowCount().subscribe({
       next: (rowCount: number) => {
         this.pageEvent.length = rowCount;
       },
@@ -47,8 +47,8 @@ export class GetAllServiceComponent implements OnInit {
     });
   }
 
-  getService(): void {
-    this.serviceService.getServices(this.pageEvent.pageIndex + 1, this.pageEvent.pageSize).subscribe({
+  getUserServices(): void {
+    this.serviceService.getUserServices(this.pageEvent.pageIndex + 1, this.pageEvent.pageSize).subscribe({
       next: (serviceList: Service[]) => {
         this.serviceList = serviceList;
       },
@@ -59,7 +59,7 @@ export class GetAllServiceComponent implements OnInit {
   }
 
   refreshData(): void {
-    this.getRowCount();
-    this.getService();
+    this.getUserServiceRowCount();
+    this.getUserServices();
   }
 }
