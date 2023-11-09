@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { ServiceService } from '../service.service';
 import { Service } from '../interfaces/service';
+import { GetAllServiceComponent } from '../get-all-service/get-all-service.component';
 
 @Component({
   selector: 'app-get-user-service',
@@ -26,7 +27,10 @@ export class GetUserServiceComponent implements OnInit {
 
   serviceIdToAdd: number = 0;
 
-  constructor(private serviceService: ServiceService, public dialog: MatDialog) {
+  constructor(
+    private serviceService: ServiceService,
+    public dialog: MatDialog
+    ) {
     this.dataSource = new MatTableDataSource(this.serviceList);
   }
 
@@ -67,5 +71,19 @@ export class GetUserServiceComponent implements OnInit {
   }
 
   showAllService() {
+    const dialogAllService = this.dialog.open(GetAllServiceComponent, {
+      width: '90%', height: '70%',
+      data: 'String Data',
+    });
+    dialogAllService.afterClosed().subscribe((res) => {
+      if (res === 'showCreateServiceDialog') {
+        console.log("Open CreateServiceDialog");
+        //
+      } else {
+        this.serviceIdToAdd = res;
+        //Add service to user service
+        //Add row to table
+      }
+    });
   }
 }

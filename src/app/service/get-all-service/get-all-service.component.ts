@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import {
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 
 import { ServiceService } from '../service.service';
 import { Service } from '../interfaces/service';
@@ -19,10 +23,12 @@ export class GetAllServiceComponent implements OnInit {
 
   serviceList: Service[] = [];
 
-  displayedColumns: string[] = ['id', 'name'];
+  displayedColumns: string[] = ['id', 'name', 'actions'];
   dataSource: MatTableDataSource<Service>;
 
-  constructor(private serviceService: ServiceService) {
+  constructor(private serviceService: ServiceService,
+    public matDialogRef: MatDialogRef<GetAllServiceComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: string) {
     this.dataSource = new MatTableDataSource(this.serviceList);
   }
 
@@ -31,12 +37,12 @@ export class GetAllServiceComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllServiceRowCount();
-    this.getAllServices();
+    this.getAllFreeServiceRowCountForCurrentUser();
+    this.getAllFreeServicesForCurrentUser();
   }
 
-  getAllServiceRowCount() {
-    this.serviceService.getAllServicesRowCount().subscribe({
+  getAllFreeServiceRowCountForCurrentUser() {
+    this.serviceService.getAllFreeServicesRowCountForCurrentUser().subscribe({
       next: (rowCount: number) => {
         this.pageEvent.length = rowCount;
       },
@@ -46,8 +52,8 @@ export class GetAllServiceComponent implements OnInit {
     });
   }
 
-  getAllServices(): void {
-    this.serviceService.getAllServices(this.pageEvent.pageIndex + 1, this.pageEvent.pageSize).subscribe({
+  getAllFreeServicesForCurrentUser(): void {
+    this.serviceService.getAllFreeServicesForCurrentUser(this.pageEvent.pageIndex + 1, this.pageEvent.pageSize).subscribe({
       next: (serviceList: Service[]) => {
         this.serviceList = serviceList;
       },
@@ -58,8 +64,16 @@ export class GetAllServiceComponent implements OnInit {
   }
 
   refreshData(): void {
-    this.getAllServiceRowCount();
-    this.getAllServices();
+    this.getAllFreeServiceRowCountForCurrentUser();
+    this.getAllFreeServicesForCurrentUser();
+  }
+
+  selectService(id: number): void {
+    this.matDialogRef.close(id);
+  }
+
+  showCreateServiceDialog() {
+    this.matDialogRef.close('showCreateServiceDialog');
   }
 
 }
