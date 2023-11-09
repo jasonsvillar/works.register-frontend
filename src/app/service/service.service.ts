@@ -34,10 +34,10 @@ export class ServiceService {
   }
 
   getAllFreeServicesForCurrentUser(page: number, rows: number): Observable<Service[]> {
-    return this.http.get<Service[]>(AUTH_API + 'services/available/page/' + page + '/rows/' + rows, httpOptions);
+    return this.http.get<Service[]>(AUTH_API + 'services/unused/page/' + page + '/rows/' + rows, httpOptions);
   }
 
   getAllFreeServicesRowCountForCurrentUser(): Observable<number> {
-    return this.http.get<number>(AUTH_API + 'services/available/row-count', httpOptions);
+    return this.http.get<number>(AUTH_API + 'services/unused/row-count', httpOptions);
   }
 }
