@@ -5,13 +5,13 @@ import { RegisterUserComponent } from './user/register-user/register-user.compon
 import { LoginComponent } from './authentication/login/login.component';
 import { DashboardComponent } from './home/dashboard/dashboard.component';
 import { authGuard } from './authentication/auth.guard';
-import { GetAllServiceComponent } from './service/get-all-service/get-all-service.component';
+import { GetUserServiceComponent } from './service/get-user-service/get-user-service.component';
 
 const routes: Routes = [
   { path: 'user/register', component: RegisterUserComponent },
   { path: 'user/login', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
-  { path: 'services', component: GetAllServiceComponent, canActivate: [authGuard] },
+  { path: 'services', component: GetUserServiceComponent, canActivate: [authGuard] },
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
 ];
 

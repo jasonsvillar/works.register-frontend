@@ -15,13 +15,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { LoginComponent } from './authentication/login/login.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { httpInterceptorProviders } from './helpers/http.interceptor';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { DashboardComponent } from './home/dashboard/dashboard.component';
 import { HeaderComponent } from './home/header/header.component';
 import { DialogLoginFailComponent } from './authentication/login/dialog/dialog-login-fail/dialog-login-fail.component';
+import { GetUserServiceComponent } from './service/get-user-service/get-user-service.component';
 import { GetAllServiceComponent } from './service/get-all-service/get-all-service.component';
 
 @NgModule({
@@ -32,6 +33,7 @@ import { GetAllServiceComponent } from './service/get-all-service/get-all-servic
     DashboardComponent,
     HeaderComponent,
     DialogLoginFailComponent,
+    GetUserServiceComponent,
     GetAllServiceComponent
   ],
   imports: [

@@ -25,7 +25,7 @@ export class ServiceService {
     return this.http.get<number>(AUTH_API + 'services/row-count', httpOptions);
   }
 
-  getSystemServices(page: number, rows: number): Observable<Service[]> {
+  getAllServices(page: number, rows: number): Observable<Service[]> {
     return this.http.get<Service[]>(AUTH_API + 'services/all/page/' + page + '/rows/' + rows, httpOptions);
   }
 

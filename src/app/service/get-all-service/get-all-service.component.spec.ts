@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GetAllServiceComponent } from './get-all-service.component';
+import { GetAllServiceSystemComponent } from './get-all-service-system.component';
 
-describe('GetAllServiceComponent', () => {
-  let component: GetAllServiceComponent;
-  let fixture: ComponentFixture<GetAllServiceComponent>;
+describe('GetAllServiceSystemComponent', () => {
+  let component: GetAllServiceSystemComponent;
+  let fixture: ComponentFixture<GetAllServiceSystemComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [GetAllServiceComponent]
+      declarations: [GetAllServiceSystemComponent]
     });
-    fixture = TestBed.createComponent(GetAllServiceComponent);
+    fixture = TestBed.createComponent(GetAllServiceSystemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
