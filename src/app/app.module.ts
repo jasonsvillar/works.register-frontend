@@ -16,6 +16,7 @@ import { LoginComponent } from './authentication/login/login.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { httpInterceptorProviders } from './helpers/http.interceptor';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
@@ -23,7 +24,8 @@ import { DashboardComponent } from './home/dashboard/dashboard.component';
 import { HeaderComponent } from './home/header/header.component';
 import { DialogLoginFailComponent } from './authentication/login/dialog/dialog-login-fail/dialog-login-fail.component';
 import { GetUserServiceComponent } from './service/get-user-service/get-user-service.component';
-import { GetAllServiceComponent } from './service/get-all-service/get-all-service.component';
+import { GetUnusedServiceComponent } from './service/get-unused-service/get-unused-service.component';
+import { CreateServiceComponent } from './service/create-service/create-service.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { GetAllServiceComponent } from './service/get-all-service/get-all-servic
     HeaderComponent,
     DialogLoginFailComponent,
     GetUserServiceComponent,
-    GetAllServiceComponent
+    GetUnusedServiceComponent,
+    CreateServiceComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,8 @@ import { GetAllServiceComponent } from './service/get-all-service/get-all-servic
     MatFormFieldModule,
     MatDialogModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSidenavModule
   ],
   providers: [
     httpInterceptorProviders, 

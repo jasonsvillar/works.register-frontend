@@ -10,11 +10,11 @@ import { ServiceService } from '../service.service';
 import { Service } from '../interfaces/service';
 
 @Component({
-  selector: 'app-get-all-service',
-  templateUrl: './get-all-service.component.html',
-  styleUrls: ['./get-all-service.component.sass']
+  selector: 'app-get-unused-service',
+  templateUrl: './get-unused-service.component.html',
+  styleUrls: ['./get-unused-service.component.sass']
 })
-export class GetAllServiceComponent implements OnInit {
+export class GetUnusedServiceComponent implements OnInit {
   pageEvent: PageEvent = {
     pageIndex: 0,
     pageSize: 10,
@@ -27,7 +27,7 @@ export class GetAllServiceComponent implements OnInit {
   dataSource: MatTableDataSource<Service>;
 
   constructor(private serviceService: ServiceService,
-    public matDialogRef: MatDialogRef<GetAllServiceComponent>,
+    public matDialogRef: MatDialogRef<GetUnusedServiceComponent>,
     @Inject(MAT_DIALOG_DATA) public data: string) {
     this.dataSource = new MatTableDataSource(this.serviceList);
   }
@@ -37,12 +37,12 @@ export class GetAllServiceComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllFreeServiceRowCountForCurrentUser();
-    this.getAllFreeServicesForCurrentUser();
+    this.getAllUnusedServiceRowCountForCurrentUser();
+    this.getAllUnusedServicesForCurrentUser();
   }
 
-  getAllFreeServiceRowCountForCurrentUser() {
-    this.serviceService.getAllFreeServicesRowCountForCurrentUser().subscribe({
+  getAllUnusedServiceRowCountForCurrentUser() {
+    this.serviceService.getAllUnusedServicesRowCountForCurrentUser().subscribe({
       next: (rowCount: number) => {
         this.pageEvent.length = rowCount;
       },
@@ -52,8 +52,8 @@ export class GetAllServiceComponent implements OnInit {
     });
   }
 
-  getAllFreeServicesForCurrentUser(): void {
-    this.serviceService.getAllFreeServicesForCurrentUser(this.pageEvent.pageIndex + 1, this.pageEvent.pageSize).subscribe({
+  getAllUnusedServicesForCurrentUser(): void {
+    this.serviceService.getAllUnusedServicesForCurrentUser(this.pageEvent.pageIndex + 1, this.pageEvent.pageSize).subscribe({
       next: (serviceList: Service[]) => {
         this.serviceList = serviceList;
       },
@@ -64,8 +64,8 @@ export class GetAllServiceComponent implements OnInit {
   }
 
   refreshData(): void {
-    this.getAllFreeServiceRowCountForCurrentUser();
-    this.getAllFreeServicesForCurrentUser();
+    this.getAllUnusedServiceRowCountForCurrentUser();
+    this.getAllUnusedServicesForCurrentUser();
   }
 
   selectService(id: number): void {

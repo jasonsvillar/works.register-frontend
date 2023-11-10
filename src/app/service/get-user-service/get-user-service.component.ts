@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 
 import { ServiceService } from '../service.service';
 import { Service } from '../interfaces/service';
-import { GetAllServiceComponent } from '../get-all-service/get-all-service.component';
+import { GetUnusedServiceComponent } from '../get-unused-service/get-unused-service.component';
+import { CreateServiceComponent } from '../create-service/create-service.component';
 
 @Component({
   selector: 'app-get-user-service',
@@ -25,12 +26,15 @@ export class GetUserServiceComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name'];
   dataSource: MatTableDataSource<Service>;
 
+  @ViewChild(MatTable) table: MatTable<Service>;
+
   serviceIdToAdd: number = 0;
 
   constructor(
     private serviceService: ServiceService,
-    public dialog: MatDialog
-    ) {
+    public dialogUnusedService: MatDialog,
+    public dialogCreateService: MatDialog
+  ) {
     this.dataSource = new MatTableDataSource(this.serviceList);
   }
 
@@ -71,14 +75,24 @@ export class GetUserServiceComponent implements OnInit {
   }
 
   showAllService() {
-    const dialogAllService = this.dialog.open(GetAllServiceComponent, {
+    const dialogAllService = this.dialogUnusedService.open(GetUnusedServiceComponent, {
       width: '90%', height: '70%',
       data: 'String Data',
     });
     dialogAllService.afterClosed().subscribe((res) => {
       if (res === 'showCreateServiceDialog') {
-        console.log("Open CreateServiceDialog");
-        //
+        const dialogCreateService = this.dialogCreateService.open(CreateServiceComponent, {
+          data: 'String Data',
+          panelClass: ['w-3/4', 'sm:w-80', 'h-80']
+        });
+        dialogCreateService.afterClosed().subscribe(
+          (newService) => {
+            if (newService) {
+              this.serviceList.push(newService);
+              this.table.renderRows();
+            }
+          }
+        );
       } else {
         this.serviceIdToAdd = res;
         //Add service to user service

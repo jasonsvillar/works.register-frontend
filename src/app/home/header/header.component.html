@@ -1,25 +1,53 @@
-<header class="bg-slate-900 p-2 flex flex-row gap-x-3 relative">
-    <img class="h-16" src="assets/img/logo.png" />
-    <div class="h-16 text-white grid grid-cols-1 content-center text-3xl font-reydex">Works</div>
+<div #hideMenu class="hidden" (click)="drawer.close()"></div>
 
-    <div *ngIf="check()" class="grid grid-cols-3 gap-x-2 ml-2">
-        <div class="h-16 grid grid-cols-1 content-center text-xl">
+<mat-drawer-container class="example-container" [hasBackdrop]="true">
+    <mat-drawer #drawer [mode]="'over'" class="w-1/2 text-center text-zinc-400 p-4">
+        <div class="grid grid-cols-1 content-center text-xl">
             <button mat-flat-button color="primary" (click)="goToServices()">Services</button>
         </div>
-        <div class="h-16 grid grid-cols-1 content-center text-xl">
+        <div class="grid grid-cols-1 content-center text-xl mt-2">
             <button mat-flat-button color="primary">Clients</button>
         </div>
-        <div class="h-16 grid grid-cols-1 content-center text-xl">
+        <div class="grid grid-cols-1 content-center text-xl mt-2">
             <button mat-flat-button color="primary">Works</button>
         </div>
-    </div>
+    </mat-drawer>
+    <mat-drawer-content>
+      
 
-    <div *ngIf="check()" class="grid grid-cols-2 content-center absolute right-4 top-0 bottom-0">
-        <div class="text-white content-center mr-2 grid text-lg">{{name}}</div>
-        <button mat-mini-fab color="accent" (click)="logout()">
-            <svg xmlns="http://www.w3.org/2000/svg" class="inline h-7 w-7 invert">
-                <image href="assets/img/logout.svg" class="h-full" />
-            </svg>
-        </button>
-    </div>
-</header>
+        <header class="bg-slate-900 p-2 flex flex-row gap-x-3 relative">
+            <div #menu *ngIf="check() && !showLargeMenu" class="grid grid-cols-1 ml-2 mt-3" (click)="drawer.toggle()">
+                <img class="h-10" src="assets/img/phone-menu.png" />
+            </div>
+        
+            <img class="h-16" src="assets/img/logo.png" />
+            <div class="h-16 text-white grid grid-cols-1 content-center text-3xl font-reydex">Works</div>
+        
+            <div *ngIf="check() && showLargeMenu" class="grid grid-cols-3 gap-x-1 ml-1">
+                <div class="h-16 grid grid-cols-1 content-center text-xl">
+                    <button mat-flat-button color="primary" (click)="goToServices()">Services</button>
+                </div>
+                <div class="h-16 grid grid-cols-1 content-center text-xl">
+                    <button mat-flat-button color="primary">Clients</button>
+                </div>
+                <div class="h-16 grid grid-cols-1 content-center text-xl">
+                    <button mat-flat-button color="primary">Works</button>
+                </div>
+            </div>
+        
+            <div *ngIf="check()" class="grid grid-cols-2 content-center absolute right-4 top-0 bottom-0">
+                <div class="text-white content-center mr-2 grid text-lg">
+                    <div *ngIf="check() && showLargeMenu">{{name}}</div>
+                </div>
+                <button mat-mini-fab color="accent" (click)="logout()">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="inline h-7 w-7 invert">
+                        <image href="assets/img/logout.svg" class="h-full" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+
+
+    </mat-drawer-content>
+  </mat-drawer-container>

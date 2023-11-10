@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Service } from './interfaces/service';
 
@@ -33,11 +33,15 @@ export class ServiceService {
     return this.http.get<number>(AUTH_API + 'services/all/row-count', httpOptions);
   }
 
-  getAllFreeServicesForCurrentUser(page: number, rows: number): Observable<Service[]> {
+  getAllUnusedServicesForCurrentUser(page: number, rows: number): Observable<Service[]> {
     return this.http.get<Service[]>(AUTH_API + 'services/unused/page/' + page + '/rows/' + rows, httpOptions);
   }
 
-  getAllFreeServicesRowCountForCurrentUser(): Observable<number> {
+  getAllUnusedServicesRowCountForCurrentUser(): Observable<number> {
     return this.http.get<number>(AUTH_API + 'services/unused/row-count', httpOptions);
+  }
+
+  saveService(service: Service): Observable<Service> {
+    return this.http.post<Service>(AUTH_API.concat("service"), service, httpOptions);
   }
 }
