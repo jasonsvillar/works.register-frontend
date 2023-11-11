@@ -1,3 +1,5 @@
+<p class="text-center text-4xl">My Services</p>
+
 <div class="h-12">
   <button mat-flat-button color="primary" class="float-right" (click)="showAllService()">+</button>
 </div>
@@ -12,6 +14,15 @@
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef> Name </th>
     <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef> Actions </th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button color="primary" (click)="deleteUserService(element.id)">
+        <img src="assets/img/trash.png" />
+      </button>
+    </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

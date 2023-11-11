@@ -8,6 +8,7 @@ import {
 
 import { ServiceService } from '../service.service';
 import { Service } from '../interfaces/service';
+import { AddUserServiceRequest } from '../interfaces/add-user-service-request';
 
 @Component({
   selector: 'app-get-unused-service',
@@ -69,7 +70,10 @@ export class GetUnusedServiceComponent implements OnInit {
   }
 
   selectService(id: number): void {
-    this.matDialogRef.close(id);
+    let serviceToAdd: AddUserServiceRequest = {
+      serviceId: id
+    };
+    this.matDialogRef.close(serviceToAdd);
   }
 
   showCreateServiceDialog() {

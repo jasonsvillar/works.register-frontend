@@ -7,6 +7,8 @@ import { ServiceService } from '../service.service';
 import { Service } from '../interfaces/service';
 import { GetUnusedServiceComponent } from '../get-unused-service/get-unused-service.component';
 import { CreateServiceComponent } from '../create-service/create-service.component';
+import { UserService } from '../interfaces/user-service';
+import { AddUserServiceRequest } from '../interfaces/add-user-service-request';
 
 @Component({
   selector: 'app-get-user-service',
@@ -23,12 +25,10 @@ export class GetUserServiceComponent implements OnInit {
 
   serviceList: Service[] = [];
 
-  displayedColumns: string[] = ['id', 'name'];
+  displayedColumns: string[] = ['id', 'name', 'actions'];
   dataSource: MatTableDataSource<Service>;
 
   @ViewChild(MatTable) table: MatTable<Service>;
-
-  serviceIdToAdd: number = 0;
 
   constructor(
     private serviceService: ServiceService,
@@ -89,15 +89,52 @@ export class GetUserServiceComponent implements OnInit {
           (newService) => {
             if (newService) {
               this.serviceList.push(newService);
+              this.pageEvent.length++;
               this.table.renderRows();
             }
           }
         );
       } else {
-        this.serviceIdToAdd = res;
-        //Add service to user service
-        //Add row to table
+        if (res) {
+          let addUserServiceRequest: AddUserServiceRequest = res;
+          this.serviceService.saveUserService(addUserServiceRequest).subscribe({
+            next: (userService: UserService) => {
+              let newService: Service = {
+                id: userService.serviceDTO.id,
+                name: userService.serviceDTO.name
+              };
+
+              this.serviceList.push(newService);
+              this.pageEvent.length++;
+              this.table.renderRows();
+            },
+            error: (err) => {
+              console.log(err.error)
+            }
+          });
+        }
       }
     });
+  }
+
+  deleteUserService(serviceId: number): void {
+    let indexToRemove = this.serviceList.findIndex(service => {
+      return service.id === serviceId;
+    });
+
+    if (indexToRemove >= 0) {
+      this.serviceService.deleteUserService(serviceId).subscribe({
+        next: (deleted: boolean) => {
+          if (deleted) {
+            this.serviceList.splice(indexToRemove, 1);
+            this.pageEvent.length--;
+            this.table.renderRows();
+          }
+        },
+        error: (err) => {
+          console.log(err.error)
+        }
+      });
+    }
   }
 }

@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Service } from './interfaces/service';
+import { UserService } from './interfaces/user-service';
+import { AddUserServiceRequest } from './interfaces/add-user-service-request';
 
 const AUTH_API = 'http://localhost:8080/api/v1/';
 
@@ -43,5 +45,13 @@ export class ServiceService {
 
   saveService(service: Service): Observable<Service> {
     return this.http.post<Service>(AUTH_API.concat("service"), service, httpOptions);
+  }
+
+  deleteUserService(serviceId: number): Observable<boolean> {
+    return this.http.delete<boolean>(AUTH_API + 'service/' + serviceId, httpOptions);
+  }
+
+  saveUserService(addUserServiceRequest: AddUserServiceRequest): Observable<UserService> {
+    return this.http.post<UserService>(AUTH_API.concat("service/user"), addUserServiceRequest, httpOptions);
   }
 }
