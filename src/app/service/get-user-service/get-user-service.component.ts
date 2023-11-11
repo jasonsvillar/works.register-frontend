@@ -117,12 +117,17 @@ export class GetUserServiceComponent implements OnInit {
     });
   }
 
-  deleteUserService(serviceId: number): void {
+  deleteUserService(event): void {
+    let target = event.target || event.srcElement || event.currentTarget;
+    target = target.parentElement;
+    let serviceId: number = target.id;
+
     let indexToRemove = this.serviceList.findIndex(service => {
-      return service.id === serviceId;
+      return service.id == serviceId;
     });
 
     if (indexToRemove >= 0) {
+      target.disabled = true;
       this.serviceService.deleteUserService(serviceId).subscribe({
         next: (deleted: boolean) => {
           if (deleted) {
@@ -132,6 +137,7 @@ export class GetUserServiceComponent implements OnInit {
           }
         },
         error: (err) => {
+          target.disabled = false;
           console.log(err.error)
         }
       });
