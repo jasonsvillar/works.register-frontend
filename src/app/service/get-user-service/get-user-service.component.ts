@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DOCUMENT } from '@angular/common';
 
 import { ServiceService } from '../service.service';
 import { Service } from '../interfaces/service';
@@ -32,6 +33,7 @@ export class GetUserServiceComponent implements OnInit {
   @ViewChild(MatTable) table: MatTable<Service>;
 
   constructor(
+    @Inject(DOCUMENT) document: Document,
     private serviceService: ServiceService,
     public dialogUnusedService: MatDialog,
     public dialogCreateService: MatDialog,
@@ -107,6 +109,10 @@ export class GetUserServiceComponent implements OnInit {
                 name: userService.serviceDTO.name
               };
 
+              if (this.serviceList === null) {
+                this.serviceList = [];
+              }
+
               this.serviceList.push(selectedService);
               this.pageEvent.length++;
               this.table.renderRows();
@@ -152,5 +158,10 @@ export class GetUserServiceComponent implements OnInit {
 
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action);
+  }
+
+  rowClick(row: any) {
+    let check = document.getElementById('check-' + row.id + '-input');
+    check.click();
   }
 }
