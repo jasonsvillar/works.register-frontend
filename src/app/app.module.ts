@@ -17,6 +17,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { httpInterceptorProviders } from './helpers/http.interceptor';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
@@ -51,7 +53,9 @@ import { CreateServiceComponent } from './service/create-service/create-service.
     MatDialogModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatSnackBarModule,
+    MatCheckboxModule
   ],
   providers: [
     httpInterceptorProviders, 

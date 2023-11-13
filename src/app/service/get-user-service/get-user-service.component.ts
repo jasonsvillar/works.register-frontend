@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { ServiceService } from '../service.service';
 import { Service } from '../interfaces/service';
@@ -25,7 +26,7 @@ export class GetUserServiceComponent implements OnInit {
 
   serviceList: Service[] = [];
 
-  displayedColumns: string[] = ['id', 'name', 'actions'];
+  displayedColumns: string[] = ['check', 'id', 'name', 'actions'];
   dataSource: MatTableDataSource<Service>;
 
   @ViewChild(MatTable) table: MatTable<Service>;
@@ -33,7 +34,8 @@ export class GetUserServiceComponent implements OnInit {
   constructor(
     private serviceService: ServiceService,
     public dialogUnusedService: MatDialog,
-    public dialogCreateService: MatDialog
+    public dialogCreateService: MatDialog,
+    private _snackBar: MatSnackBar
   ) {
     this.dataSource = new MatTableDataSource(this.serviceList);
   }
@@ -91,6 +93,7 @@ export class GetUserServiceComponent implements OnInit {
               this.serviceList.push(newService);
               this.pageEvent.length++;
               this.table.renderRows();
+              this.openSnackBar('Service created and added', 'Ok');
             }
           }
         );
@@ -99,14 +102,15 @@ export class GetUserServiceComponent implements OnInit {
           let addUserServiceRequest: AddUserServiceRequest = res;
           this.serviceService.saveUserService(addUserServiceRequest).subscribe({
             next: (userService: UserService) => {
-              let newService: Service = {
+              let selectedService: Service = {
                 id: userService.serviceDTO.id,
                 name: userService.serviceDTO.name
               };
 
-              this.serviceList.push(newService);
+              this.serviceList.push(selectedService);
               this.pageEvent.length++;
               this.table.renderRows();
+              this.openSnackBar('Service "' + selectedService.name + '" added', 'Ok');
             },
             error: (err) => {
               console.log(err.error)
@@ -121,6 +125,7 @@ export class GetUserServiceComponent implements OnInit {
     let target = event.target || event.srcElement || event.currentTarget;
     target = target.parentElement;
     let serviceId: number = target.id;
+    let serviceName: number = target.name;
 
     let indexToRemove = this.serviceList.findIndex(service => {
       return service.id == serviceId;
@@ -134,6 +139,7 @@ export class GetUserServiceComponent implements OnInit {
             this.serviceList.splice(indexToRemove, 1);
             this.pageEvent.length--;
             this.table.renderRows();
+            this.openSnackBar('Service "' + serviceName + '" deleted', 'Ok');
           }
         },
         error: (err) => {
@@ -142,5 +148,9 @@ export class GetUserServiceComponent implements OnInit {
         }
       });
     }
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
   }
 }

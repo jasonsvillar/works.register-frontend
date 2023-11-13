@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -13,8 +14,11 @@ import { Service } from '../interfaces/service';
   styleUrls: ['./create-service.component.sass']
 })
 export class CreateServiceComponent {
-  constructor(private serviceService: ServiceService,
-    public matDialogRef: MatDialogRef<CreateServiceComponent>) { }
+  constructor(
+    private serviceService: ServiceService,
+    public matDialogRef: MatDialogRef<CreateServiceComponent>,
+    private _snackBar: MatSnackBar
+  ) { }
 
   name: string = '';
 
@@ -26,6 +30,10 @@ export class CreateServiceComponent {
     this.serviceService.saveService(createService).subscribe({
       next: (serviceCreated: Service) => {
         this.matDialogRef.close(serviceCreated);
+      },
+      error: (err) => {
+        console.log(err);
+        this._snackBar.open(err.error, "Error");
       }
     });
   }
