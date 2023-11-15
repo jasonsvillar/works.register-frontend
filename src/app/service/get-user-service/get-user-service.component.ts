@@ -201,4 +201,28 @@ export class GetUserServiceComponent implements OnInit {
       }
     })
   }
+
+  selectAll(event: any) {
+    let doChecked = event.target.checked;
+
+    let checks = document.getElementsByClassName('mdc-checkbox__native-control');
+    for (let key = 0; key < checks.length; key++) {
+      let button = checks[key];
+      let buttonId: string = button.getAttribute('id');
+      let buttonClass: string = button.getAttribute('class');
+      let buttonIsSelected: boolean = buttonClass.includes('selected');
+
+      let buttonElement = document.getElementById(buttonId);
+
+      if (doChecked) {
+        if (!buttonIsSelected) {
+          buttonElement.click();
+        }
+      } else {
+        if (buttonIsSelected) {
+          buttonElement.click();
+        }
+      }
+    }
+  }
 }
