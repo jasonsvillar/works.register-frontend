@@ -1,7 +1,15 @@
 <p class="text-center text-4xl">My Services</p>
 
-<div class="h-12">
-  <button mat-flat-button color="primary" class="float-right" (click)="showAllService()">+</button>
+<div *ngIf="arrayChecked.length > 0" class="h-14 float-left">
+  <button id="bulk-delete-button" mat-flat-button class="!bg-transparent shadow-sm shadow-black !h-12" (click)="removeSelectedService($event)">
+    <img src="assets/img/trash.png" class="h-9"/>
+  </button>
+</div>
+
+<div class="h-14 float-right">
+  <button mat-flat-button class="!bg-transparent shadow-sm shadow-black !h-12" (click)="showAllService()">
+    <img src="assets/img/plus.png" class="h-9"/>
+  </button>
 </div>
 
 <table mat-table [dataSource]="serviceList" class="mat-elevation-z8">
@@ -9,7 +17,7 @@
   <ng-container matColumnDef="check">
     <th mat-header-cell *matHeaderCellDef>  </th>
     <td mat-cell *matCellDef="let element">
-      <mat-checkbox id="check-{{element.id}}" (click)=$event.stopPropagation()></mat-checkbox>
+      <mat-checkbox value="{{element.id}}" id="check-{{element.id}}" (click)=$event.stopPropagation() (click)="onCheckboxChange($event)"></mat-checkbox>
     </td>
   </ng-container>
 

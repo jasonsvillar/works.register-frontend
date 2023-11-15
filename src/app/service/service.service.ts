@@ -44,7 +44,7 @@ export class ServiceService {
   }
 
   saveService(service: Service): Observable<Service> {
-    return this.http.post<Service>(AUTH_API.concat("service"), service, httpOptions);
+    return this.http.post<Service>(AUTH_API.concat('service'), service, httpOptions);
   }
 
   deleteUserService(serviceId: number): Observable<boolean> {
@@ -52,6 +52,10 @@ export class ServiceService {
   }
 
   saveUserService(addUserServiceRequest: AddUserServiceRequest): Observable<UserService> {
-    return this.http.post<UserService>(AUTH_API.concat("service/user"), addUserServiceRequest, httpOptions);
+    return this.http.post<UserService>(AUTH_API.concat('service/user'), addUserServiceRequest, httpOptions);
+  }
+
+  bulkDeleteUserService(arrayServiceId: number[]): Observable<UserService[]> {
+    return this.http.post<UserService[]>(AUTH_API.concat('services/delete'), arrayServiceId, httpOptions);
   }
 }

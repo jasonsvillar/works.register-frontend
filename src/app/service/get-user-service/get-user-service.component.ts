@@ -164,4 +164,41 @@ export class GetUserServiceComponent implements OnInit {
     let check = document.getElementById('check-' + row.id + '-input');
     check.click();
   }
+
+  arrayChecked: number[] = [];
+  onCheckboxChange(event: any) {
+    let serviceId = event.target.value;
+    if (event.target.checked) {
+      this.arrayChecked.push(serviceId);
+    } else {
+      let indexOfId = this.arrayChecked.indexOf(serviceId);
+      this.arrayChecked.splice(indexOfId, 1);
+    }
+  }
+
+  removeSelectedService(event: any) {
+    this.serviceService.bulkDeleteUserService(this.arrayChecked).subscribe({
+      next: (userServiceArray: UserService[]) => {
+        userServiceArray.forEach(
+          (userService) => {
+            let indexToRemove = this.serviceList.findIndex(service => {
+              return service.id == userService.serviceDTO.id;
+            });
+        
+            if (indexToRemove >= 0) {
+              this.serviceList.splice(indexToRemove, 1);
+              this.pageEvent.length--;
+            }
+          }
+        );
+
+        this.table.renderRows();
+        this.arrayChecked = [];
+        this.openSnackBar('User Services deleted', 'Ok');
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
 }
