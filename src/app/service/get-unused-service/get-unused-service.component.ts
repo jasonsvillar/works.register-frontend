@@ -124,7 +124,7 @@ export class GetUnusedServiceComponent implements OnInit {
   }
 
   addSelectedService(event: any) {
-    console.log(this.arrayChecked);
+    this.matDialogRef.close(this.arrayChecked);
   }
 
 }

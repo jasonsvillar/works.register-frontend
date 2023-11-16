@@ -58,4 +58,8 @@ export class ServiceService {
   bulkDeleteUserService(arrayServiceId: number[]): Observable<UserService[]> {
     return this.http.post<UserService[]>(AUTH_API.concat('services/delete'), arrayServiceId, httpOptions);
   }
+
+  bulkSaveUserService(arrayServiceId: number[]): Observable<UserService[]> {
+    return this.http.post<UserService[]>(AUTH_API.concat('services/user'), arrayServiceId, httpOptions);
+  }
 }

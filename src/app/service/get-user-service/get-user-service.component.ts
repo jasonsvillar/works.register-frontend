@@ -99,8 +99,8 @@ export class GetUserServiceComponent implements OnInit {
             }
           }
         );
-      } else {
-        if (res) {
+      } else if (res !== undefined) {
+        if ('serviceId' in res) {
           let addUserServiceRequest: AddUserServiceRequest = res;
           this.serviceService.saveUserService(addUserServiceRequest).subscribe({
             next: (userService: UserService) => {
@@ -117,6 +117,26 @@ export class GetUserServiceComponent implements OnInit {
               this.pageEvent.length++;
               this.table.renderRows();
               this.openSnackBar('Service "' + selectedService.name + '" added', 'Ok');
+            },
+            error: (err) => {
+              console.log(err.error)
+            }
+          });
+        }
+
+        if (res.length > 0) {
+          let serviceIdArray: number[] = res;
+          this.serviceService.bulkSaveUserService(serviceIdArray).subscribe({
+            next: (userServiceArray: UserService[]) => {
+              userServiceArray.forEach(
+                (userService) => {
+                  this.serviceList.push(userService.serviceDTO);
+                  this.pageEvent.length++;
+                }
+              )
+
+              this.table.renderRows();
+              this.openSnackBar('Services added', 'Ok');
             },
             error: (err) => {
               console.log(err.error)
