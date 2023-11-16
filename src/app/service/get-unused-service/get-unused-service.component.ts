@@ -24,7 +24,7 @@ export class GetUnusedServiceComponent implements OnInit {
 
   serviceList: Service[] = [];
 
-  displayedColumns: string[] = ['id', 'name', 'actions'];
+  displayedColumns: string[] = ['check', 'id', 'name', 'actions'];
   dataSource: MatTableDataSource<Service>;
 
   constructor(private serviceService: ServiceService,
@@ -78,6 +78,53 @@ export class GetUnusedServiceComponent implements OnInit {
 
   showCreateServiceDialog() {
     this.matDialogRef.close('showCreateServiceDialog');
+  }
+
+  arrayChecked: number[] = [];
+  onCheckboxChange(event: any) {
+    let serviceId = event.target.value;
+    if (event.target.checked) {
+      this.arrayChecked.push(serviceId);
+    } else {
+      let indexOfId = this.arrayChecked.indexOf(serviceId);
+      this.arrayChecked.splice(indexOfId, 1);
+    }
+  }
+
+  selectAll(event: any) {
+    let doChecked = event.target.checked;
+
+    let checks = document.getElementsByName('check-add');
+    for (let key = 0; key < checks.length; key++) {
+      let button = checks[key];
+      let buttonId: string = button.getAttribute('id');
+
+      if (buttonId.includes('input')) {
+        let buttonClass: string = button.getAttribute('class');
+        let buttonIsSelected: boolean = buttonClass.includes('selected');
+
+        let buttonElement = document.getElementById(buttonId);
+
+        if (doChecked) {
+          if (!buttonIsSelected) {
+            buttonElement.click();
+          }
+        } else {
+          if (buttonIsSelected) {
+            buttonElement.click();
+          }
+        }
+      }
+    }
+  }
+
+  rowClick(row: any) {
+    let check = document.getElementById('check-' + row.id + '-input');
+    check.click();
+  }
+
+  addSelectedService(event: any) {
+    console.log(this.arrayChecked);
   }
 
 }

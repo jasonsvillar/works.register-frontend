@@ -184,7 +184,7 @@ export class GetUserServiceComponent implements OnInit {
             let indexToRemove = this.serviceList.findIndex(service => {
               return service.id == userService.serviceDTO.id;
             });
-        
+
             if (indexToRemove >= 0) {
               this.serviceList.splice(indexToRemove, 1);
               this.pageEvent.length--;
@@ -205,22 +205,25 @@ export class GetUserServiceComponent implements OnInit {
   selectAll(event: any) {
     let doChecked = event.target.checked;
 
-    let checks = document.getElementsByClassName('mdc-checkbox__native-control');
+    let checks = document.getElementsByName('check-delete');
     for (let key = 0; key < checks.length; key++) {
       let button = checks[key];
       let buttonId: string = button.getAttribute('id');
-      let buttonClass: string = button.getAttribute('class');
-      let buttonIsSelected: boolean = buttonClass.includes('selected');
 
-      let buttonElement = document.getElementById(buttonId);
+      if (buttonId.includes('input')) {
+        let buttonClass: string = button.getAttribute('class');
+        let buttonIsSelected: boolean = buttonClass.includes('selected');
 
-      if (doChecked) {
-        if (!buttonIsSelected) {
-          buttonElement.click();
-        }
-      } else {
-        if (buttonIsSelected) {
-          buttonElement.click();
+        let buttonElement = document.getElementById(buttonId);
+
+        if (doChecked) {
+          if (!buttonIsSelected) {
+            buttonElement.click();
+          }
+        } else {
+          if (buttonIsSelected) {
+            buttonElement.click();
+          }
         }
       }
     }

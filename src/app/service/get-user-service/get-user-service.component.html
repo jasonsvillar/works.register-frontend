@@ -19,7 +19,7 @@
       <mat-checkbox id="select-all" (click)="selectAll($event)"></mat-checkbox>
     </th>
     <td mat-cell *matCellDef="let element">
-      <mat-checkbox value="{{element.id}}" id="check-{{element.id}}" (click)=$event.stopPropagation() (click)="onCheckboxChange($event)"></mat-checkbox>
+      <mat-checkbox name="check-delete" value="{{element.id}}" id="check-{{element.id}}" (click)=$event.stopPropagation() (click)="onCheckboxChange($event)"></mat-checkbox>
     </td>
   </ng-container>
 
