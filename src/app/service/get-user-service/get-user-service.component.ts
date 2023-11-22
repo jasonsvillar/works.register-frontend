@@ -92,6 +92,10 @@ export class GetUserServiceComponent implements OnInit {
         dialogCreateService.afterClosed().subscribe(
           (newService) => {
             if (newService) {
+              if (this.serviceList === null) {
+                this.serviceList = [];
+              }
+
               this.serviceList.push(newService);
               this.pageEvent.length++;
               this.table.renderRows();
