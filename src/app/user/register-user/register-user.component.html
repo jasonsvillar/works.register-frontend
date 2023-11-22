@@ -8,32 +8,33 @@
     <div *ngIf="!submitted">
       <mat-form-field appearance="outline">
         <mat-label>Name</mat-label>
-        <input matInput type="text" autocomplete="off" [(ngModel)]="user.name" required />
+        <input matInput type="text" autocomplete="off" [(ngModel)]="userNotValidatedRequest.name" required />
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
-        <input matInput type="text" autocomplete="off" [(ngModel)]="user.email" required />
+        <input matInput type="text" autocomplete="off" [(ngModel)]="userNotValidatedRequest.email" required />
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Password</mat-label>
-        <input matInput type="password" [(ngModel)]="user.password" required />
+        <input matInput type="password" [(ngModel)]="userNotValidatedRequest.password" required />
       </mat-form-field>
 
       <div class="text-center">
         <button mat-raised-button color="primary" (click)="registerUser()">Register</button>
       </div>
+
+      <div class="text-center mt-4">
+        You already have an account?
+        <a href="user/login" class="underline">Log in here</a>.
+      </div>
     </div>
 
     <div *ngIf="submitted">
       <h4>Registration request has been successfully send!</h4>
+      <h4>Check your Email for activate your account.</h4>
     </div>
-  </div>
-
-  <div class="text-center mt-4">
-    You already have an account?
-    <a href="user/login" class="underline">Log in here</a>.
   </div>
 
 </div>

@@ -28,6 +28,7 @@ import { DialogLoginFailComponent } from './authentication/login/dialog/dialog-l
 import { GetUserServiceComponent } from './service/get-user-service/get-user-service.component';
 import { GetUnusedServiceComponent } from './service/get-unused-service/get-unused-service.component';
 import { CreateServiceComponent } from './service/create-service/create-service.component';
+import { ValidateUserComponent } from './user/validate-user/validate-user.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { CreateServiceComponent } from './service/create-service/create-service.
     DialogLoginFailComponent,
     GetUserServiceComponent,
     GetUnusedServiceComponent,
-    CreateServiceComponent
+    CreateServiceComponent,
+    ValidateUserComponent
   ],
   imports: [
     BrowserModule,
