@@ -6,7 +6,10 @@ import { Service } from './interfaces/service';
 import { UserService } from './interfaces/user-service';
 import { AddUserServiceRequest } from './interfaces/add-user-service-request';
 
-const AUTH_API = 'http://localhost:8080/api/v1/';
+import { environment } from '../../environments/environment';
+
+
+const AUTH_API = environment.linkBackend + '/api/v1/';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

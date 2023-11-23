@@ -3,6 +3,8 @@ import { UserNotValidatedService } from '../user-not-validated.service';
 import { UserNotValidatedRequest } from '../interfaces/user-not-validated-request';
 import { UserNotValidatedResponse } from '../interfaces/user-not-validated-response';
 
+import { environment } from '../../../environments/environment';
+
 @Component({
   selector: 'app-register-user',
   templateUrl: './register-user.component.html',
@@ -10,6 +12,8 @@ import { UserNotValidatedResponse } from '../interfaces/user-not-validated-respo
 })
 
 export class RegisterUserComponent implements OnInit {
+  link = environment.link;
+
   userNotValidatedRequest: UserNotValidatedRequest = {
     name: '',
     email: '',
@@ -24,7 +28,7 @@ export class RegisterUserComponent implements OnInit {
   ngOnInit(): void { }
 
   registerUser(): void {
-    this.userNotValidatedRequest.frontendUrlForValidating = "http://localhost:4200/user/validate"
+    this.userNotValidatedRequest.frontendUrlForValidating = this.link + "/user/validate"
     + "/name/" + this.userNotValidatedRequest.name
     + "/email/" + this.userNotValidatedRequest.email
     + "/code/";

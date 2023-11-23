@@ -6,7 +6,10 @@ import { UserNotValidatedRequest } from './interfaces/user-not-validated-request
 import { UserNotValidatedResponse } from './interfaces/user-not-validated-response';
 import { User } from './interfaces/user';
 
-const AUTH_API = 'http://localhost:8080/api/v1/';
+import { environment } from '../../environments/environment';
+
+
+const AUTH_API = environment.linkBackend + '/api/v1/';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

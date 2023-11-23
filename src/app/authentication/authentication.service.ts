@@ -5,7 +5,11 @@ import { Observable } from 'rxjs';
 import { LoginRequest } from './interfaces/login-request';
 import { LoginResponse } from './interfaces/login-response';
 
-const AUTH_API = 'http://localhost:8080/api/auth/';
+import { environment } from '../../environments/environment';
+
+
+const AUTH_API = environment.linkBackend + '/api/auth/';
+
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
