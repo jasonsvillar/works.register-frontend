@@ -6,7 +6,7 @@ Master deploy on render.com - https://works-register.onrender.com
 
 Dev deploy on render.com - https://works-register-dev.onrender.com
 
-_* These service are run with the free plan on render.com. Be patient._
+_* These services are run with the free plan on render.com. Be patient._
 
 ## Backend Api Rest - Project - Java Spring Boot
 
