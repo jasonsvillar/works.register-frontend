@@ -44,6 +44,9 @@ export class GetUserServiceComponent implements OnInit {
 
   handlePageEvent(pageEvent: PageEvent) {
     this.pageEvent = pageEvent;
+
+    this.getUserServiceRowCount();
+    this.getUserServices();
   }
 
   ngOnInit(): void {
