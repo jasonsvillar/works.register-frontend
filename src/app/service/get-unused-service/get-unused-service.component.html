@@ -2,15 +2,15 @@
 <h1 class="text-center underline">Services</h1>
 
 <div *ngIf="arrayChecked.length > 0" class="h-14 float-left">
-    <button id="bulk-delete-button" mat-flat-button class="ml-2 shadow-sm shadow-black !h-12"
+    <button id="bulk-delete-button" mat-flat-button class="ml-2 shadow-sm shadow-black !h-10"
         (click)="addSelectedService($event)">
-        <img src="assets/img/check.png" class="h-9" />
+        <img src="assets/img/check.png" class="h-7" />
     </button>
 </div>
 
 <div class="h-14 float-right">
-    <button mat-flat-button class="mr-2 shadow-sm shadow-black !h-12" (click)="showCreateServiceDialog()">
-        <img src="assets/img/plus.png" class="h-9" />
+    <button mat-flat-button class="mr-2 shadow-sm shadow-black !h-10" (click)="showCreateServiceDialog()">
+        <img src="assets/img/plus.png" class="h-7" />
     </button>
 </div>
 

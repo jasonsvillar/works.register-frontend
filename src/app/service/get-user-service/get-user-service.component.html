@@ -1,14 +1,14 @@
 <p class="text-center text-4xl">My Services</p>
 
 <div *ngIf="arrayChecked.length > 0" class="h-14 float-left">
-  <button id="bulk-delete-button" mat-flat-button class="!bg-transparent shadow-sm shadow-black !h-12" (click)="removeSelectedService($event)">
-    <img src="assets/img/trash.png" class="h-9"/>
+  <button id="bulk-delete-button" mat-flat-button class="!bg-transparent shadow-sm shadow-black !h-10" (click)="removeSelectedService($event)">
+    <img src="assets/img/trash.png" class="h-7"/>
   </button>
 </div>
 
 <div class="h-14 float-right">
-  <button mat-flat-button class="!bg-transparent shadow-sm shadow-black !h-12" (click)="showAllService()">
-    <img src="assets/img/plus.png" class="h-9"/>
+  <button mat-flat-button class="!bg-transparent shadow-sm shadow-black !h-10" (click)="showAllService()">
+    <img src="assets/img/plus.png" class="h-7"/>
   </button>
 </div>
 
@@ -42,8 +42,8 @@
     </td>
   </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="rowClick(row)"></tr>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+  <tr mat-row [style.border-top]="'3px solid black'" *matRowDef="let row; columns: displayedColumns;" (click)="rowClick(row)"></tr>
 </table>
 
 <mat-paginator (page)="handlePageEvent($event)" [length]="pageEvent.length" [pageSize]="pageEvent.pageSize"
