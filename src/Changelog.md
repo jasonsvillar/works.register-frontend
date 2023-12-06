@@ -1,6 +1,6 @@
 # CHANGE LOG
 
-## [unreleased]
+## [1.2.2]
 
 ### Added
 - Add version in header.
