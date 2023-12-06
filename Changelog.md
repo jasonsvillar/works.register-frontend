@@ -1,5 +1,16 @@
 # CHANGE LOG
 
+## [unreleased]
+
+### Added
+
+### Changed
+
+### Fixed
+- More homogeneus background when resize.
+
+### Removed
+
 ## [1.2.2]
 
 ### Added
