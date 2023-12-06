@@ -7,10 +7,7 @@ import { DOCUMENT } from '@angular/common';
 
 import { ServiceService } from '../service.service';
 import { Service } from '../interfaces/service';
-import { GetUnusedServiceComponent } from '../get-unused-service/get-unused-service.component';
 import { CreateServiceComponent } from '../create-service/create-service.component';
-import { UserService } from '../interfaces/user-service';
-import { AddUserServiceRequest } from '../interfaces/add-user-service-request';
 
 @Component({
   selector: 'app-get-user-service',
@@ -81,79 +78,6 @@ export class GetUserServiceComponent implements OnInit {
     this.getUserServices();
   }
 
-  showAllService() {
-    const dialogAllService = this.dialogUnusedService.open(GetUnusedServiceComponent, {
-      width: '90%', height: '70%',
-      data: 'String Data',
-    });
-    dialogAllService.afterClosed().subscribe((res) => {
-      if (res === 'showCreateServiceDialog') {
-        const dialogCreateService = this.dialogCreateService.open(CreateServiceComponent, {
-          data: 'String Data',
-          panelClass: ['w-3/4', 'sm:w-80', 'h-80']
-        });
-        dialogCreateService.afterClosed().subscribe(
-          (newService) => {
-            if (newService) {
-              if (this.serviceList === null) {
-                this.serviceList = [];
-              }
-
-              this.serviceList.push(newService);
-              this.pageEvent.length++;
-              this.table.renderRows();
-              this.openSnackBar('Service created and added', 'Ok');
-            }
-          }
-        );
-      } else if (res !== undefined) {
-        if ('serviceId' in res) {
-          let addUserServiceRequest: AddUserServiceRequest = res;
-          this.serviceService.saveUserService(addUserServiceRequest).subscribe({
-            next: (userService: UserService) => {
-              let selectedService: Service = {
-                id: userService.serviceDTO.id,
-                name: userService.serviceDTO.name
-              };
-
-              if (this.serviceList === null) {
-                this.serviceList = [];
-              }
-
-              this.serviceList.push(selectedService);
-              this.pageEvent.length++;
-              this.table.renderRows();
-              this.openSnackBar('Service "' + selectedService.name + '" added', 'Ok');
-            },
-            error: (err) => {
-              console.log(err.error)
-            }
-          });
-        }
-
-        if (res.length > 0) {
-          let serviceIdArray: number[] = res;
-          this.serviceService.bulkSaveUserService(serviceIdArray).subscribe({
-            next: (userServiceArray: UserService[]) => {
-              userServiceArray.forEach(
-                (userService) => {
-                  this.serviceList.push(userService.serviceDTO);
-                  this.pageEvent.length++;
-                }
-              )
-
-              this.table.renderRows();
-              this.openSnackBar('Services added', 'Ok');
-            },
-            error: (err) => {
-              console.log(err.error)
-            }
-          });
-        }
-      }
-    });
-  }
-
   deleteUserService(event): void {
     let target = event.target || event.srcElement || event.currentTarget;
     target = target.parentElement;
@@ -203,32 +127,6 @@ export class GetUserServiceComponent implements OnInit {
     }
   }
 
-  removeSelectedService(event: any) {
-    this.serviceService.bulkDeleteUserService(this.arrayChecked).subscribe({
-      next: (userServiceArray: UserService[]) => {
-        userServiceArray.forEach(
-          (userService) => {
-            let indexToRemove = this.serviceList.findIndex(service => {
-              return service.id == userService.serviceDTO.id;
-            });
-
-            if (indexToRemove >= 0) {
-              this.serviceList.splice(indexToRemove, 1);
-              this.pageEvent.length--;
-            }
-          }
-        );
-
-        this.table.renderRows();
-        this.arrayChecked = [];
-        this.openSnackBar('User Services deleted', 'Ok');
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    })
-  }
-
   selectAll(event: any) {
     let doChecked = event.target.checked;
 
@@ -254,5 +152,52 @@ export class GetUserServiceComponent implements OnInit {
         }
       }
     }
+  }
+
+  showCreateServiceDialog() {
+    const dialogCreateService = this.dialogCreateService.open(CreateServiceComponent, {
+      data: 'String Data',
+      panelClass: ['w-3/4', 'sm:w-80', 'h-80']
+    });
+    dialogCreateService.afterClosed().subscribe(
+      (newService) => {
+        if (newService) {
+          if (this.serviceList === null) {
+            this.serviceList = [];
+          }
+
+          this.serviceList.push(newService);
+          this.pageEvent.length++;
+          this.table.renderRows();
+          this.openSnackBar('Service created', 'Ok');
+        }
+      }
+    );
+  }
+
+  removeSelectedService(event: any) {
+    this.serviceService.bulkDeleteService(this.arrayChecked).subscribe({
+      next: (serviceArray: Service[]) => {
+        serviceArray.forEach(
+          (userService) => {
+            let indexToRemove = this.serviceList.findIndex(service => {
+              return service.id == userService.id;
+            });
+
+            if (indexToRemove >= 0) {
+              this.serviceList.splice(indexToRemove, 1);
+              this.pageEvent.length--;
+            }
+          }
+        );
+
+        this.table.renderRows();
+        this.arrayChecked = [];
+        this.openSnackBar('User Services deleted', 'Ok');
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
   }
 }

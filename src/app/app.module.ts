@@ -26,7 +26,6 @@ import { DashboardComponent } from './home/dashboard/dashboard.component';
 import { HeaderComponent } from './home/header/header.component';
 import { DialogLoginFailComponent } from './authentication/login/dialog/dialog-login-fail/dialog-login-fail.component';
 import { GetUserServiceComponent } from './service/get-user-service/get-user-service.component';
-import { GetUnusedServiceComponent } from './service/get-unused-service/get-unused-service.component';
 import { CreateServiceComponent } from './service/create-service/create-service.component';
 import { ValidateUserComponent } from './user/validate-user/validate-user.component';
 
@@ -39,7 +38,6 @@ import { ValidateUserComponent } from './user/validate-user/validate-user.compon
     HeaderComponent,
     DialogLoginFailComponent,
     GetUserServiceComponent,
-    GetUnusedServiceComponent,
     CreateServiceComponent,
     ValidateUserComponent
   ],
