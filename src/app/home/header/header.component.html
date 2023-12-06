@@ -1,6 +1,6 @@
 <div #hideMenu class="hidden" (click)="drawer.close()"></div>
 
-<mat-drawer-container class="example-container" [hasBackdrop]="true">
+<mat-drawer-container class="drawer-container" [hasBackdrop]="true">
     <mat-drawer #drawer [mode]="'over'" class="w-1/2 text-center text-zinc-400 p-4">
         <div class="grid grid-cols-1 content-center text-xl">
             <button mat-flat-button color="primary" (click)="goToServices()">Services</button>

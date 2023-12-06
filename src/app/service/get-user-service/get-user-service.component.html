@@ -42,7 +42,7 @@
     </td>
   </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row [style.border-top]="'3px solid black'" *matRowDef="let row; columns: displayedColumns;" (click)="rowClick(row)"></tr>
 </table>
 
