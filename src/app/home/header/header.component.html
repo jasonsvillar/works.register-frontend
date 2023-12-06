@@ -11,6 +11,9 @@
         <div class="grid grid-cols-1 content-center text-xl mt-2">
             <button mat-flat-button color="primary">Works</button>
         </div>
+        <div class="grid grid-cols-1 content-center text-sm mt-4 text-slate-300">
+            unreleased
+        </div>
     </mat-drawer>
     <mat-drawer-content>
       
@@ -22,6 +25,8 @@
         
             <img class="h-16" src="assets/img/logo.png" />
             <div class="h-16 text-white grid grid-cols-1 content-center text-3xl font-reydex">Works</div>
+
+            <div *ngIf="check() && showLargeMenu" class="h-16 text-white grid grid-cols-1 content-center text-md">unreleased</div>
         
             <div *ngIf="check() && showLargeMenu" class="grid grid-cols-3 gap-x-1 ml-1">
                 <div class="h-16 grid grid-cols-1 content-center text-xl">
