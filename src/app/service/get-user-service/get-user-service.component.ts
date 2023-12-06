@@ -193,7 +193,7 @@ export class GetUserServiceComponent implements OnInit {
 
         this.table.renderRows();
         this.arrayChecked = [];
-        this.openSnackBar('User Services deleted', 'Ok');
+        this.openSnackBar('Services deleted', 'Ok');
       },
       error: (err) => {
         console.log(err);
