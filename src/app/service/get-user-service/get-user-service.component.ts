@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DOCUMENT } from '@angular/common';
 
 import { ServiceService } from '../service.service';
 import { Service } from '../interfaces/service';
@@ -30,7 +29,6 @@ export class GetUserServiceComponent implements OnInit {
   @ViewChild(MatTable) table: MatTable<Service>;
 
   constructor(
-    @Inject(DOCUMENT) document: Document,
     private serviceService: ServiceService,
     public dialogUnusedService: MatDialog,
     public dialogCreateService: MatDialog,
@@ -39,16 +37,18 @@ export class GetUserServiceComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.serviceList);
   }
 
-  handlePageEvent(pageEvent: PageEvent) {
-    this.pageEvent = pageEvent;
-
+  refreshData(): void {
     this.getUserServiceRowCount();
     this.getUserServices();
   }
 
+  handlePageEvent(pageEvent: PageEvent) {
+    this.pageEvent = pageEvent;
+    this.refreshData();
+  }
+
   ngOnInit(): void {
-    this.getUserServiceRowCount();
-    this.getUserServices();
+    this.refreshData();
   }
 
   getUserServiceRowCount() {
@@ -73,23 +73,18 @@ export class GetUserServiceComponent implements OnInit {
     });
   }
 
-  refreshData(): void {
-    this.getUserServiceRowCount();
-    this.getUserServices();
-  }
-
-  deleteUserService(event): void {
-    let target = event.target || event.srcElement || event.currentTarget;
-    target = target.parentElement;
-    let serviceId: number = target.id;
-    let serviceName: number = target.name;
+  deleteUserService(event: MouseEvent): void {
+    let element = event.target as HTMLInputElement;
+    let target: HTMLElement = element.parentElement;
+    let serviceId: number = +target.id;
+    let serviceName: string = target.getAttribute('name');
 
     let indexToRemove = this.serviceList.findIndex(service => {
       return service.id == serviceId;
     });
 
     if (indexToRemove >= 0) {
-      target.disabled = true;
+      target.setAttribute('disabled', 'true');
       this.serviceService.deleteUserService(serviceId).subscribe({
         next: (deleted: boolean) => {
           if (deleted) {
@@ -100,7 +95,7 @@ export class GetUserServiceComponent implements OnInit {
           }
         },
         error: (err) => {
-          target.disabled = false;
+          target.setAttribute('disabled', 'false');
           console.log(err.error)
         }
       });
@@ -127,8 +122,9 @@ export class GetUserServiceComponent implements OnInit {
     }
   }
 
-  selectAll(event: any) {
-    let doChecked = event.target.checked;
+  selectAll(event: MouseEvent) {
+    let element = event.target as HTMLInputElement;
+    let doChecked = element.checked;
 
     let checks = document.getElementsByName('check-delete');
     for (let key = 0; key < checks.length; key++) {
@@ -175,7 +171,7 @@ export class GetUserServiceComponent implements OnInit {
     );
   }
 
-  removeSelectedService(event: any) {
+  removeSelectedService() {
     this.serviceService.bulkDeleteService(this.arrayChecked).subscribe({
       next: (serviceArray: Service[]) => {
         serviceArray.forEach(
