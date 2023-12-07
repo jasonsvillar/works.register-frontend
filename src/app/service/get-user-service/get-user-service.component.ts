@@ -112,9 +112,10 @@ export class GetUserServiceComponent implements OnInit {
   }
 
   arrayChecked: number[] = [];
-  onCheckboxChange(event: any) {
-    let serviceId = event.target.value;
-    if (event.target.checked) {
+  onCheckboxChange(event: MouseEvent) {
+    let element = event.target as HTMLInputElement;
+    let serviceId: number = +element.value;
+    if (element.checked) {
       this.arrayChecked.push(serviceId);
     } else {
       let indexOfId = this.arrayChecked.indexOf(serviceId);
