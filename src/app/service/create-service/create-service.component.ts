@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import {
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialogRef } from '@angular/material/dialog';
 
 import { ServiceService } from '../service.service';
 import { Service } from '../interfaces/service';
@@ -18,7 +15,7 @@ export class CreateServiceComponent {
     private serviceService: ServiceService,
     public matDialogRef: MatDialogRef<CreateServiceComponent>,
     private _snackBar: MatSnackBar
-  ) { }
+  ) {}
 
   name: string = '';
 

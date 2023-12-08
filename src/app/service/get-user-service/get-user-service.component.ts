@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ServiceService } from '../service.service';
 import { Service } from '../interfaces/service';
 import { CreateServiceComponent } from '../create-service/create-service.component';
+import { FilterServiceComponent } from '../filter-service/filter-service.component';
 
 @Component({
   selector: 'app-get-user-service',
@@ -23,6 +24,8 @@ export class GetUserServiceComponent implements OnInit {
 
   serviceList: Service[] = [];
 
+  nameFilter: string;
+
   displayedColumns: string[] = ['check', 'id', 'name', 'actions'];
   dataSource: MatTableDataSource<Service>;
 
@@ -32,6 +35,7 @@ export class GetUserServiceComponent implements OnInit {
     private serviceService: ServiceService,
     public dialogUnusedService: MatDialog,
     public dialogCreateService: MatDialog,
+    public dialogFilterService: MatDialog,
     private _snackBar: MatSnackBar
   ) {
     this.dataSource = new MatTableDataSource(this.serviceList);
@@ -196,5 +200,18 @@ export class GetUserServiceComponent implements OnInit {
         console.log(err);
       }
     })
+  }
+
+  showFilterDialog(): void {
+    const dialogFilterService = this.dialogFilterService.open(FilterServiceComponent, {
+      data: 'String Data',
+      panelClass: ['w-3/4', 'sm:w-80', 'h-80']
+    });
+
+    dialogFilterService.afterClosed().subscribe(
+      (data) => {
+        console.log(data);
+      }
+    );
   }
 }
