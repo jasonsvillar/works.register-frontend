@@ -24,8 +24,6 @@ export class GetUserServiceComponent implements OnInit {
 
   serviceList: Service[] = [];
 
-  nameFilter: string;
-
   displayedColumns: string[] = ['check', 'id', 'name', 'actions'];
   dataSource: MatTableDataSource<Service>;
 
@@ -42,6 +40,7 @@ export class GetUserServiceComponent implements OnInit {
   }
 
   refreshData(): void {
+    this.arrayChecked = [];
     this.getUserServiceRowCount();
     this.getUserServices();
   }
@@ -56,7 +55,7 @@ export class GetUserServiceComponent implements OnInit {
   }
 
   getUserServiceRowCount() {
-    this.serviceService.getUserServicesRowCount().subscribe({
+    this.serviceService.getUserServicesRowCount(this.idFilter, this.nameFilter).subscribe({
       next: (rowCount: number) => {
         this.pageEvent.length = rowCount;
       },
@@ -67,7 +66,12 @@ export class GetUserServiceComponent implements OnInit {
   }
 
   getUserServices(): void {
-    this.serviceService.getUserServices(this.pageEvent.pageIndex + 1, this.pageEvent.pageSize).subscribe({
+    this.serviceService.getUserServices(
+      this.pageEvent.pageIndex + 1,
+      this.pageEvent.pageSize,
+      this.idFilter, this.nameFilter
+      )
+      .subscribe({
       next: (serviceList: Service[]) => {
         this.serviceList = serviceList;
       },
@@ -158,7 +162,7 @@ export class GetUserServiceComponent implements OnInit {
   showCreateServiceDialog() {
     const dialogCreateService = this.dialogCreateService.open(CreateServiceComponent, {
       data: 'String Data',
-      panelClass: ['w-3/4', 'sm:w-80', 'h-80']
+      panelClass: ['w-3/4', 'sm:w-80', 'h-50']
     });
     dialogCreateService.afterClosed().subscribe(
       (newService) => {
@@ -202,15 +206,24 @@ export class GetUserServiceComponent implements OnInit {
     })
   }
 
+
+  idFilter: number;
+  nameFilter: string;
+
   showFilterDialog(): void {
     const dialogFilterService = this.dialogFilterService.open(FilterServiceComponent, {
-      data: 'String Data',
-      panelClass: ['w-3/4', 'sm:w-80', 'h-80']
+      data: {id: this.idFilter, name: this.nameFilter},
+      panelClass: ['w-3/4', 'sm:w-80', 'h-70']
     });
 
     dialogFilterService.afterClosed().subscribe(
-      (data) => {
-        console.log(data);
+      (data: string[]) => {
+        if (data) {
+          this.idFilter = +data['id'];
+          this.nameFilter = data['name'];
+
+          this.refreshData();
+        }
       }
     );
   }

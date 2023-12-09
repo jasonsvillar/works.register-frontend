@@ -3,11 +3,13 @@
 ## [unreleased]
 
 ### Added
+- Filter Service dialog.
+- Beans for active service filters.
 
 ### Changed
 
 ### Fixed
-- More homogeneus background when resize.
+- More homogeneus background color when resize.
 
 ### Removed
 

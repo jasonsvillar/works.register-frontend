@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Service } from './interfaces/service';
 
@@ -20,12 +20,28 @@ export class ServiceService {
 
   constructor(private http: HttpClient) { }
 
-  getUserServices(page: number, rows: number): Observable<Service[]> {
-    return this.http.get<Service[]>(AUTH_API + 'services/page/' + page + '/rows/' + rows, httpOptions);
+  getUserServices(page: number, rows: number, id?: number, name?: string): Observable<Service[]> {
+    let queryParams = new HttpParams();
+    if (id) {
+      queryParams = queryParams.append("id", id);
+    }
+    if (name) {
+      queryParams = queryParams.append("name", name);
+    }
+
+    return this.http.get<Service[]>(AUTH_API + 'services/page/' + page + '/rows/' + rows, { params:queryParams, headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
   }
 
-  getUserServicesRowCount(): Observable<number> {
-    return this.http.get<number>(AUTH_API + 'services/row-count', httpOptions);
+  getUserServicesRowCount(id?: number, name?: string): Observable<number> {
+    let queryParams = new HttpParams();
+    if (id) {
+      queryParams = queryParams.append("id", id);
+    }
+    if (name) {
+      queryParams = queryParams.append("name", name);
+    }
+
+    return this.http.get<number>(AUTH_API + 'services/row-count', { params:queryParams, headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
   }
 
   saveService(service: Service): Observable<Service> {

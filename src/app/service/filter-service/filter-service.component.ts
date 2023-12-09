@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { ServiceService } from '../service.service';
 
@@ -12,10 +13,14 @@ import { ServiceService } from '../service.service';
 })
 export class FilterServiceComponent {
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: {id?: string; name?: string},
     private serviceService: ServiceService,
     public matDialogRef: MatDialogRef<FilterServiceComponent>,
     private _snackBar: MatSnackBar
-  ) {}
+  ) {
+    this.id = data.id;
+    this.name = data.name;
+  }
 
   id: string;
   name: string;
