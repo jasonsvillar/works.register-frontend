@@ -5,6 +5,7 @@
 ### Added
 - Filter Service dialog.
 - Beans for active service filters.
+- Edit Service dialog.
 
 ### Changed
 

@@ -44,7 +44,7 @@ export class ServiceService {
     return this.http.get<number>(AUTH_API + 'services/row-count', { params:queryParams, headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
   }
 
-  saveService(service: Service): Observable<Service> {
+  saveUserService(service: Service): Observable<Service> {
     return this.http.post<Service>(AUTH_API.concat('service'), service, httpOptions);
   }
 
@@ -54,5 +54,9 @@ export class ServiceService {
 
   bulkDeleteService(arrayServiceId: number[]): Observable<Service[]> {
     return this.http.post<Service[]>(AUTH_API.concat('services/delete'), arrayServiceId, httpOptions);
+  }
+
+  editUserService(service: Service): Observable<Service> {
+    return this.http.put<Service>(AUTH_API.concat('service'), service, httpOptions);
   }
 }

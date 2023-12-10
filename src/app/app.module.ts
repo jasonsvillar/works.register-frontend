@@ -29,6 +29,7 @@ import { GetUserServiceComponent } from './service/get-user-service/get-user-ser
 import { CreateServiceComponent } from './service/create-service/create-service.component';
 import { ValidateUserComponent } from './user/validate-user/validate-user.component';
 import { FilterServiceComponent } from './service/filter-service/filter-service.component';
+import { EditServiceComponent } from './service/edit-service/edit-service.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { FilterServiceComponent } from './service/filter-service/filter-service.
     GetUserServiceComponent,
     CreateServiceComponent,
     ValidateUserComponent,
-    FilterServiceComponent
+    FilterServiceComponent,
+    EditServiceComponent
   ],
   imports: [
     BrowserModule,

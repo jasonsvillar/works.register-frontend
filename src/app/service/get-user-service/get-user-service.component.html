@@ -52,6 +52,12 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef> Actions </th>
     <td mat-cell *matCellDef="let element" (click)=$event.stopPropagation()>
+      <button mat-icon-button color="primary" name="{{element.name}}" id="{{element.id}}" (click)="editUserService($event)">
+        <svg xmlns="http://www.w3.org/2000/svg">
+          <image href="assets/img/edit.svg" class="h-full" />
+        </svg>
+      </button>
+
       <button mat-icon-button color="primary" name="{{element.name}}" id="{{element.id}}" (click)="deleteUserService($event)">
         <img src="assets/img/trash.png" />
       </button>

@@ -8,6 +8,7 @@ import { ServiceService } from '../service.service';
 import { Service } from '../interfaces/service';
 import { CreateServiceComponent } from '../create-service/create-service.component';
 import { FilterServiceComponent } from '../filter-service/filter-service.component';
+import { EditServiceComponent } from '../edit-service/edit-service.component';
 
 @Component({
   selector: 'app-get-user-service',
@@ -34,6 +35,7 @@ export class GetUserServiceComponent implements OnInit {
     public dialogUnusedService: MatDialog,
     public dialogCreateService: MatDialog,
     public dialogFilterService: MatDialog,
+    public dialogEditService: MatDialog,
     private _snackBar: MatSnackBar
   ) {
     this.dataSource = new MatTableDataSource(this.serviceList);
@@ -103,7 +105,7 @@ export class GetUserServiceComponent implements OnInit {
           }
         },
         error: (err) => {
-          target.setAttribute('disabled', 'false');
+          target.removeAttribute('disabled');
           console.log(err.error)
         }
       });
@@ -226,5 +228,41 @@ export class GetUserServiceComponent implements OnInit {
         }
       }
     );
+  }
+
+  editUserService(event: MouseEvent): void {
+    let element = event.target as HTMLInputElement;
+    let target: HTMLElement = element.parentElement;
+    let serviceId: number = +target.id;
+    let serviceName: string = target.getAttribute('name');
+
+    let indexToEdit = this.serviceList.findIndex(service => {
+      return service.id == serviceId;
+    });
+
+    let serviceToEdit: Service = {
+      id: serviceId,
+      name: serviceName
+    };
+
+    if (indexToEdit >= 0) {
+      target.setAttribute('disabled', 'true');
+      
+      const dialogEditService = this.dialogEditService.open(EditServiceComponent, {
+        data: serviceToEdit,
+        panelClass: ['w-3/4', 'sm:w-80', 'h-70']
+      });
+  
+      dialogEditService.afterClosed().subscribe(
+        (serviceEdited: Service) => {
+          if (serviceEdited) {
+            this.serviceList.at(indexToEdit).name = serviceEdited.name;
+            this.openSnackBar('Services ' + serviceId + ' edited', 'Ok');
+          }
+
+          target.removeAttribute('disabled');
+        }
+      );
+    }
   }
 }

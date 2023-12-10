@@ -24,7 +24,7 @@ export class CreateServiceComponent {
       name: this.name
     };
 
-    this.serviceService.saveService(createService).subscribe({
+    this.serviceService.saveUserService(createService).subscribe({
       next: (serviceCreated: Service) => {
         this.matDialogRef.close(serviceCreated);
       },
