@@ -6,6 +6,8 @@ import { LoginComponent } from './authentication/login/login.component';
 import { DashboardComponent } from './home/dashboard/dashboard.component';
 import { authGuard } from './authentication/auth.guard';
 import { GetUserServiceComponent } from './service/get-user-service/get-user-service.component';
+import { GetUserClientComponent } from './client/get-user-client/get-user-client.component';
+
 import { ValidateUserComponent } from './user/validate-user/validate-user.component';
 
 const routes: Routes = [
@@ -14,7 +16,8 @@ const routes: Routes = [
   { path: 'user/validate/name/:name/email/:email/code/:code', component: ValidateUserComponent },
   { path: 'user/login', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
-  { path: 'services', component: GetUserServiceComponent, canActivate: [authGuard] }
+  { path: 'services', component: GetUserServiceComponent, canActivate: [authGuard] },
+  { path: 'clients', component: GetUserClientComponent, canActivate: [authGuard] }
 ];
 
 @NgModule({

@@ -69,4 +69,9 @@ export class HeaderComponent implements OnInit {
     this.hideMenuAction();
     this.router.navigateByUrl('services');
   }
+
+  goToClients(): void {
+    this.hideMenuAction();
+    this.router.navigateByUrl('clients');
+  }
 }

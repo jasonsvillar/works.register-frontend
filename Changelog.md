@@ -3,6 +3,7 @@
 ## [unreleased]
 
 ### Added
+- Clients page. Can view and add.
 
 ### Changed
 
@@ -10,7 +11,7 @@
 
 ### Removed
 
-## [1.3]
+## [1.3] - 2023-12-09
 
 ### Added
 - Filter Service dialog.
@@ -24,7 +25,7 @@
 
 ### Removed
 
-## [1.2.2]
+## [1.2.2] - 2023-12-05
 
 ### Added
 - Add version in header.

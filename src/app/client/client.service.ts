@@ -1,9 +1,55 @@
 import { Injectable } from '@angular/core';
 
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Client } from './interfaces/client';
+
+import { environment } from '../../environments/environment';
+
+
+const AUTH_API = environment.linkBackend + '/api/v1/';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+
 @Injectable({
   providedIn: 'root'
 })
 export class ClientService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+
+  getUserClients(page: number, rows: number,
+    id?: number,
+    name?: string,
+    surname?: string,
+    identificationNumber?: string
+    ): Observable<Client[]> {
+      let queryParams = new HttpParams();
+      if (id) {
+        queryParams = queryParams.append("id", id);
+      }
+      if (name) {
+        queryParams = queryParams.append("name", name);
+      }
+
+      return this.http.get<Client[]>(AUTH_API + 'clients/page/' + page + '/rows/' + rows, { params:queryParams, headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
+  }
+
+  getUserClientsRowCount(id?: number, name?: string): Observable<number> {
+    let queryParams = new HttpParams();
+    if (id) {
+      queryParams = queryParams.append("id", id);
+    }
+    if (name) {
+      queryParams = queryParams.append("name", name);
+    }
+
+    return this.http.get<number>(AUTH_API + 'clients/row-count', { params:queryParams, headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
+  }
+
+  saveUserClient(client: Client): Observable<Client> {
+    return this.http.post<Client>(AUTH_API.concat('client'), client, httpOptions);
+  }
 }

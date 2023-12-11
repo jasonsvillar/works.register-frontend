@@ -30,15 +30,23 @@ export class GetUserServiceComponent implements OnInit {
 
   @ViewChild(MatTable) table: MatTable<Service>;
 
+  arrayChecked: number[] = [];
+
+  idFilter: number;
+  nameFilter: string;
+
   constructor(
     private serviceService: ServiceService,
-    public dialogUnusedService: MatDialog,
     public dialogCreateService: MatDialog,
     public dialogFilterService: MatDialog,
     public dialogEditService: MatDialog,
     private _snackBar: MatSnackBar
   ) {
     this.dataSource = new MatTableDataSource(this.serviceList);
+  }
+
+  ngOnInit(): void {
+    this.refreshData();
   }
 
   refreshData(): void {
@@ -49,10 +57,6 @@ export class GetUserServiceComponent implements OnInit {
 
   handlePageEvent(pageEvent: PageEvent) {
     this.pageEvent = pageEvent;
-    this.refreshData();
-  }
-
-  ngOnInit(): void {
     this.refreshData();
   }
 
@@ -121,7 +125,6 @@ export class GetUserServiceComponent implements OnInit {
     check.click();
   }
 
-  arrayChecked: number[] = [];
   onCheckboxChange(event: MouseEvent) {
     let element = event.target as HTMLInputElement;
     let serviceId: number = +element.value;
@@ -208,10 +211,6 @@ export class GetUserServiceComponent implements OnInit {
     })
   }
 
-
-  idFilter: number;
-  nameFilter: string;
-
   showFilterDialog(): void {
     const dialogFilterService = this.dialogFilterService.open(FilterServiceComponent, {
       data: {id: this.idFilter, name: this.nameFilter},
@@ -257,7 +256,7 @@ export class GetUserServiceComponent implements OnInit {
         (serviceEdited: Service) => {
           if (serviceEdited) {
             this.serviceList.at(indexToEdit).name = serviceEdited.name;
-            this.openSnackBar('Services ' + serviceId + ' edited', 'Ok');
+            this.openSnackBar('Service ' + serviceId + ' edited', 'Ok');
           }
 
           target.removeAttribute('disabled');
