@@ -155,7 +155,32 @@ export class GetUserClientComponent implements OnInit {
 
   }
 
-  deleteUserClient(event: MouseEvent) {
-    
+  deleteUserClient(event: MouseEvent): void {
+    let element = event.target as HTMLInputElement;
+    let target: HTMLElement = element.parentElement;
+    let clientId: number = +target.id;
+    let clientName: string = target.getAttribute('name');
+
+    let indexToRemove = this.clientList.findIndex(client => {
+      return client.id == clientId;
+    });
+
+    if (indexToRemove >= 0) {
+      target.setAttribute('disabled', 'true');
+      this.clientService.deleteUserClient(clientId).subscribe({
+        next: (deleted: boolean) => {
+          if (deleted) {
+            this.clientList.splice(indexToRemove, 1);
+            this.pageEvent.length--;
+            this.table.renderRows();
+            this.openSnackBar('Client "' + clientName + '" deleted', 'Ok');
+          }
+        },
+        error: (err) => {
+          target.removeAttribute('disabled');
+          console.log(err.error)
+        }
+      });
+    }
   }
 }

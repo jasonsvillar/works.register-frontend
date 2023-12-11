@@ -3,7 +3,9 @@
 ## [unreleased]
 
 ### Added
-- Clients page. Can view and add.
+- Can view clients.
+- Can create clients.
+- Can delete client.
 
 ### Changed
 

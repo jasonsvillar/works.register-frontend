@@ -52,4 +52,8 @@ export class ClientService {
   saveUserClient(client: Client): Observable<Client> {
     return this.http.post<Client>(AUTH_API.concat('client'), client, httpOptions);
   }
+
+  deleteUserClient(clientId: number): Observable<boolean> {
+    return this.http.delete<boolean>(AUTH_API + 'client/' + clientId, httpOptions);
+  }
 }
