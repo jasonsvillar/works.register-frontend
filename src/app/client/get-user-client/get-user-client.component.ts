@@ -4,10 +4,12 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 
 import { ClientService } from '../client.service';
 import { Client } from '../interfaces/client';
 import { CreateClientComponent } from '../create-client/create-client.component';
+import { FilterClientComponent } from '../filter-client/filter-client.component';
 
 @Component({
   selector: 'app-get-user-client',
@@ -32,11 +34,17 @@ export class GetUserClientComponent implements OnInit {
 
   idFilter: number;
   nameFilter: string;
+  surnameFilter: string;
+  identificationNumberFilter: string;
+
+  mobile: boolean;
 
   constructor(
     private clientService: ClientService,
     public dialogCreateClient: MatDialog,
-    private _snackBar: MatSnackBar
+    public dialogFilterClient: MatDialog,
+    private _snackBar: MatSnackBar,
+    private responsive: BreakpointObserver
   ) {
     this.dataSource = new MatTableDataSource(this.clientList);
   }
@@ -72,6 +80,17 @@ export class GetUserClientComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.responsive.observe(Breakpoints.XSmall)
+      .subscribe(result => {
+        if (result.matches) {
+          this.mobile = true;
+          this.displayedColumns = ['check', 'name', 'identificationNumber', 'actions'];
+        } else {
+          this.mobile = false;
+          this.displayedColumns = ['check', 'id', 'name', 'surname', 'identificationNumber', 'actions'];
+        }
+      });
+
     this.dataSource.sort = this.sort;
     this.refreshData();
   }
@@ -83,7 +102,7 @@ export class GetUserClientComponent implements OnInit {
   }
 
   getUserClientRowCount() {
-    this.clientService.getUserClientsRowCount(this.idFilter, this.nameFilter).subscribe({
+    this.clientService.getUserClientsRowCount(this.idFilter, this.nameFilter, this.surnameFilter, this.identificationNumberFilter).subscribe({
       next: (rowCount: number) => {
         this.pageEvent.length = rowCount;
       },
@@ -97,7 +116,7 @@ export class GetUserClientComponent implements OnInit {
     this.clientService.getUserClients(
       this.pageEvent.pageIndex + 1,
       this.pageEvent.pageSize,
-      this.idFilter, this.nameFilter
+      this.idFilter, this.nameFilter, this.surnameFilter, this.identificationNumberFilter
       )
       .subscribe({
       next: (clientList: Client[]) => {
@@ -240,5 +259,25 @@ export class GetUserClientComponent implements OnInit {
         console.log(err);
       }
     })
+  }
+
+  showFilterDialog(): void {
+    const dialogFilterClient = this.dialogFilterClient.open(FilterClientComponent, {
+      data: {id: this.idFilter, name: this.nameFilter, surname: this.surnameFilter, identificationNumber: this.identificationNumberFilter},
+      panelClass: ['w-3/4', 'sm:w-80', 'h-70']
+    });
+
+    dialogFilterClient.afterClosed().subscribe(
+      (data: string[]) => {
+        if (data) {
+          this.idFilter = +data['id'];
+          this.nameFilter = data['name'];
+          this.surnameFilter = data['surname'];
+          this.identificationNumberFilter = data['identificationNumber'];
+
+          this.refreshData();
+        }
+      }
+    );
   }
 }

@@ -12,6 +12,30 @@
   </button>
 </div>
 
+<div class="h-14 float-right pr-3">
+  <button id="filter-button" mat-flat-button class="!bg-transparent shadow-sm shadow-black !h-10" (click)="showFilterDialog()">
+    <img src="assets/img/filter.png" class="h-7 invert"/>
+  </button>
+</div>
+
+<div *ngIf="nameFilter || idFilter || surnameFilter || identificationNumberFilter" class="clear-both h-12">
+  <div *ngIf="nameFilter" class="bean float-left mr-2">
+    <div class="float-left underline mr-2 text-slate-400">Name</div> {{nameFilter}}
+    <div class="bean-close" (click)="nameFilter = null; refreshData();">X</div></div>
+
+  <div *ngIf="idFilter" class="bean float-left mr-2">
+    <div class="float-left underline mr-2 text-slate-400">Id</div> {{idFilter}}
+    <div class="bean-close" (click)="idFilter = null; refreshData();">X</div></div>
+
+  <div *ngIf="surnameFilter" class="bean float-left mr-2">
+    <div class="float-left underline mr-2 text-slate-400">Surname</div> {{surnameFilter}}
+    <div class="bean-close" (click)="surnameFilter = null; refreshData();">X</div></div>
+
+  <div *ngIf="identificationNumberFilter" class="bean float-left">
+    <div class="float-left underline mr-2 text-slate-400">Identification</div> {{identificationNumberFilter}}
+    <div class="bean-close" (click)="identificationNumberFilter = null; refreshData();">X</div></div>
+</div>
+
 <table mat-table [dataSource]="clientList" matSort (matSortChange)="sortChange($event)" class="mat-elevation-z8">
 
   <ng-container matColumnDef="check">

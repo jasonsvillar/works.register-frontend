@@ -33,17 +33,34 @@ export class ClientService {
       if (name) {
         queryParams = queryParams.append("name", name);
       }
+      if (surname) {
+        queryParams = queryParams.append("surname", surname);
+      }
+      if (identificationNumber) {
+        queryParams = queryParams.append("identificationNumber", identificationNumber);
+      }
 
       return this.http.get<Client[]>(AUTH_API + 'clients/page/' + page + '/rows/' + rows, { params:queryParams, headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
   }
 
-  getUserClientsRowCount(id?: number, name?: string): Observable<number> {
+  getUserClientsRowCount(
+    id?: number,
+    name?: string,
+    surname?: string,
+    identificationNumber?: string
+    ): Observable<number> {
     let queryParams = new HttpParams();
     if (id) {
       queryParams = queryParams.append("id", id);
     }
     if (name) {
       queryParams = queryParams.append("name", name);
+    }
+    if (surname) {
+      queryParams = queryParams.append("surname", surname);
+    }
+    if (identificationNumber) {
+      queryParams = queryParams.append("identificationNumber", identificationNumber);
     }
 
     return this.http.get<number>(AUTH_API + 'clients/row-count', { params:queryParams, headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
