@@ -19,6 +19,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
 
 import { httpInterceptorProviders } from './helpers/http.interceptor';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
@@ -63,7 +64,8 @@ import { CreateClientComponent } from './client/create-client/create-client.comp
     MatPaginatorModule,
     MatSidenavModule,
     MatSnackBarModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSortModule
   ],
   providers: [
     httpInterceptorProviders, 

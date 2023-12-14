@@ -7,6 +7,7 @@
 - Can create clients.
 - Can delete client.
 - Can bulk delete clients.
+- Can order data in table service and client.
 
 ### Changed
 

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -40,7 +41,38 @@ export class GetUserClientComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.clientList);
   }
 
+  @ViewChild(MatSort) sort: MatSort;
+
+  sortChange(sort: Sort) {
+    const data = this.clientList.slice();
+    if (!sort.active || sort.direction === '') {
+      this.clientList = data;
+      return;
+    }
+
+    this.clientList = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'name':
+          return this.compare(a.name, b.name, isAsc);
+        case 'surname':
+          return this.compare(a.surname, b.surname, isAsc);
+        case 'id':
+          return this.compare(a.id, b.id, isAsc);
+        case 'identificationNumber':
+          return this.compare(a.identificationNumber, b.identificationNumber, isAsc);
+        default:
+          return 0;
+      }
+    });
+  }
+
+  compare(a: number | string, b: number | string, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
+
   ngOnInit(): void {
+    this.dataSource.sort = this.sort;
     this.refreshData();
   }
 
