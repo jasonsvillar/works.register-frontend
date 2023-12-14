@@ -183,4 +183,30 @@ export class GetUserClientComponent implements OnInit {
       });
     }
   }
+
+  removeSelectedClient() {
+    this.clientService.bulkDeleteClient(this.arrayChecked).subscribe({
+      next: (clientArray: Client[]) => {
+        clientArray.forEach(
+          (userClient) => {
+            let indexToRemove = this.clientList.findIndex(client => {
+              return client.id == userClient.id;
+            });
+
+            if (indexToRemove >= 0) {
+              this.clientList.splice(indexToRemove, 1);
+              this.pageEvent.length--;
+            }
+          }
+        );
+
+        this.table.renderRows();
+        this.arrayChecked = [];
+        this.openSnackBar('Clients deleted', 'Ok');
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
 }

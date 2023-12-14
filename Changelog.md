@@ -6,6 +6,7 @@
 - Can view clients.
 - Can create clients.
 - Can delete client.
+- Can bulk delete clients.
 
 ### Changed
 

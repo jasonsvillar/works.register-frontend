@@ -56,4 +56,8 @@ export class ClientService {
   deleteUserClient(clientId: number): Observable<boolean> {
     return this.http.delete<boolean>(AUTH_API + 'client/' + clientId, httpOptions);
   }
+
+  bulkDeleteClient(arrayClientId: number[]): Observable<Client[]> {
+    return this.http.post<Client[]>(AUTH_API.concat('clients/delete'), arrayClientId, httpOptions);
+  }
 }
