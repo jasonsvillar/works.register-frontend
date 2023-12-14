@@ -8,6 +8,7 @@
 - Can delete client.
 - Can bulk delete clients.
 - Can order data in table service and client.
+- Filter client dialog.
 
 ### Changed
 
