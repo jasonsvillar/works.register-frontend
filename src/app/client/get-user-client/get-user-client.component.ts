@@ -10,6 +10,7 @@ import { ClientService } from '../client.service';
 import { Client } from '../interfaces/client';
 import { CreateClientComponent } from '../create-client/create-client.component';
 import { FilterClientComponent } from '../filter-client/filter-client.component';
+import { EditClientComponent } from '../edit-client/edit-client.component';
 
 @Component({
   selector: 'app-get-user-client',
@@ -43,6 +44,7 @@ export class GetUserClientComponent implements OnInit {
     private clientService: ClientService,
     public dialogCreateClient: MatDialog,
     public dialogFilterClient: MatDialog,
+    public dialogEditClient: MatDialog,
     private _snackBar: MatSnackBar,
     private responsive: BreakpointObserver
   ) {
@@ -202,8 +204,35 @@ export class GetUserClientComponent implements OnInit {
     );
   }
 
-  editUserClient(event: MouseEvent) {
+  editUserClient(event: MouseEvent, clientToEdit: Client) {
+    let element = event.target as HTMLInputElement;
+    let target: HTMLElement = element.parentElement;
 
+    let indexToEdit = this.clientList.findIndex(client => {
+      return client.id == clientToEdit.id;
+    });
+
+    if (indexToEdit >= 0) {
+      target.setAttribute('disabled', 'true');
+      
+      const dialogEditClient = this.dialogEditClient.open(EditClientComponent, {
+        data: JSON.parse(JSON.stringify(clientToEdit)),
+        panelClass: ['w-3/4', 'sm:w-80', 'h-70']
+      });
+  
+      dialogEditClient.afterClosed().subscribe(
+        (clientEdited: Client) => {
+          if (clientEdited) {
+            this.clientList.at(indexToEdit).name = clientEdited.name;
+            this.clientList.at(indexToEdit).surname = clientEdited.surname;
+            this.clientList.at(indexToEdit).identificationNumber = clientEdited.identificationNumber;
+            this.openSnackBar('Client ' + clientToEdit.id + ' edited', 'Ok');
+          }
+
+          target.removeAttribute('disabled');
+        }
+      );
+    }
   }
 
   deleteUserClient(event: MouseEvent): void {

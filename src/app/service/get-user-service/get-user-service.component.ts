@@ -256,26 +256,19 @@ export class GetUserServiceComponent implements OnInit {
     );
   }
 
-  editUserService(event: MouseEvent): void {
+  editUserService(event: MouseEvent, serviceToEdit: Service): void {
     let element = event.target as HTMLInputElement;
     let target: HTMLElement = element.parentElement;
-    let serviceId: number = +target.id;
-    let serviceName: string = target.getAttribute('name');
 
     let indexToEdit = this.serviceList.findIndex(service => {
-      return service.id == serviceId;
+      return service.id == serviceToEdit.id;
     });
-
-    let serviceToEdit: Service = {
-      id: serviceId,
-      name: serviceName
-    };
 
     if (indexToEdit >= 0) {
       target.setAttribute('disabled', 'true');
       
       const dialogEditService = this.dialogEditService.open(EditServiceComponent, {
-        data: serviceToEdit,
+        data: JSON.parse(JSON.stringify(serviceToEdit)),
         panelClass: ['w-3/4', 'sm:w-80', 'h-70']
       });
   
@@ -283,7 +276,7 @@ export class GetUserServiceComponent implements OnInit {
         (serviceEdited: Service) => {
           if (serviceEdited) {
             this.serviceList.at(indexToEdit).name = serviceEdited.name;
-            this.openSnackBar('Service ' + serviceId + ' edited', 'Ok');
+            this.openSnackBar('Service ' + serviceToEdit.id + ' edited', 'Ok');
           }
 
           target.removeAttribute('disabled');

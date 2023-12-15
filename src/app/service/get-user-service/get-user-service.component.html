@@ -52,7 +52,7 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef> Actions </th>
     <td mat-cell *matCellDef="let element" (click)=$event.stopPropagation()>
-      <button mat-icon-button color="primary" name="{{element.name}}" id="{{element.id}}" (click)="editUserService($event)">
+      <button mat-icon-button color="primary" (click)="editUserService($event, element)">
         <svg xmlns="http://www.w3.org/2000/svg">
           <image href="assets/img/edit.svg" class="h-full" />
         </svg>

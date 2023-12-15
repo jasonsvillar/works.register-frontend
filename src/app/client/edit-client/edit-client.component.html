@@ -1,0 +1,43 @@
+<div class="p-4">
+  
+    <div class="h-10">
+  
+      <div class="float-left text-xl">
+        Edit
+      </div>
+  
+      <div class="float-right">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7">
+            <image href="assets/img/edit.svg" class="h-7" />
+        </svg>
+      </div>
+  
+    </div>
+    
+    <div>
+        <mat-form-field appearance="outline">
+          <mat-label>Id</mat-label>
+          <input matInput type="text" autocomplete="off" [(ngModel)]="client.id" type="number" disabled />
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput type="text" autocomplete="off" [(ngModel)]="client.name" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Surname</mat-label>
+          <input matInput type="text" autocomplete="off" [(ngModel)]="client.surname" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Identification</mat-label>
+            <input matInput type="text" autocomplete="off" [(ngModel)]="client.identificationNumber" />
+        </mat-form-field>
+  
+        <div class="text-center">
+          <button mat-raised-button color="primary" (click)="save()">Save</button>
+        </div>
+    </div>
+  
+  </div>
